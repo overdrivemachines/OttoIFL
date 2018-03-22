@@ -18,7 +18,7 @@ http://ottodiy.com
 ## Installation
 coming soon ...
 
-## Hardware (Basically same OttoDIY Plus + Arms + WiFi + mp3 + i2c Led Matrix )
+## Hardware (OttoDIY Plus + Arms + WiFi + mp3 + i2c Led Matrix )
 <img src="https://github.com/sfranzyshen/OttoIFL/blob/master/media/connection.png" width="500" align="center">
 
  |  Component                    | Arduino Pin |
