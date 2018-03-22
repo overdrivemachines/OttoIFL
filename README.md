@@ -25,25 +25,24 @@ coming soon ...
  | --- | --- |
  |                               | D0          |
  |                               | D1          |
- |  Servo Hip left               | D2          |
- |  Servo Hip right              | D3          |
- |  Servo Foot Left              | D4          |
+ |  Servo Leg left               | D2          |
+ |  Servo Leg right              | D3          |
+ |  Servo Foot left              | D4          |
  |  Servo Foot right             | D5          |
  |  WiFi / mp3 (ESP-01)    Tx    | D6          |
  |  WiFi / mp3 (ESP-01)    Rx    | D7          |
- |                               |             |
- |  Ultrasonic SRF04 Trigger     | D8          |
- |  Ultrasonic SRF04 Echo        | D9          |
+ |  Ultrasonic Trigger (SRF04)   | D8          |
+ |  Ultrasonic Echo (SRF04)      | D9          |
  |  Servo Arm left               | D10         |
  |  Servo Arm right              | D11         |
  |  RGB LED  5mm (APA106)        | D12         |
  |  Piezo Buzzer                 | D13         |
- |  Light sensor (RIGHT)         | A0          |
- |  Light Sensor (LEFT)          | A1          |
+ |  Light sensor (Right)         | A0          |
+ |  Light Sensor (Left)          | A1          |
  |  Button 1 / ADCTouch          | A2          |
  |  Button 2 / ADCTouch          | A3          |
- |  LED Matrix (HT16K33)  SDA    | A4          |
- |  LED Matrix (HT16K33)  SCL    | A5          |
+ |  LED Matrix (HT16K33)  sda    | A4          |
+ |  LED Matrix (HT16K33)  scl    | A5          |
  |  Analog Sound Sensor (MEMS)   | A6          |
  |                               | A7          |
 ## Scratch Programming in mBlock 
