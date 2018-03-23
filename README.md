@@ -1,7 +1,6 @@
 # OttoIFL
 Otto DIY+ with arms, mp3 Audio, WiFi, and i2c Led Matrix ...
 
-# OttoIFL
 Mix from OttoDIY opensource Project.  
 http://ottodiy.com 
 
