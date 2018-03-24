@@ -1,23 +1,26 @@
 # OttoIFL
-Otto DIY+ with arms, mp3 Audio, WiFi, and i2c Led Matrix ...
+OttoDIY+ with arms, mp3 Audio, WiFi, Web App, and i2c Led Matrix ...
 
 Mix from OttoDIY opensource Project.  
 http://ottodiy.com 
 
 ## About this Library
-- Arms
-- HT16K33 i2c Led Matrix (mouth) ... 
-- WiFi ... replace Bluetooth 
-- mp3 ... trigger audio samples
-- APA106 RGB LED (nose)
-- MEMS microphone
-- ADCTouch
+- Arms (Lego Hand Pads)
+- Capacitance Touch (ADCTouch)
+- WiFi (Esp8266)
+- Web App
+- Mp3 Audio 
+- Led Matrix (i2c)
+- RGB Led Nose (5mm)
+- mBlocks Extention
 - mBlocks Examples (Calibration, Smooth Criminal ...)
+- Arduino Library
+- Arduino Examples (Calibration, Smooth Criminal ...)
 
 ## Installation
 coming soon ...
 
-## Hardware (OttoDIY Plus + Arms + WiFi + mp3 + i2c Led Matrix )
+## Hardware
 <img src="https://github.com/sfranzyshen/OttoIFL/blob/master/media/connection.png" width="500" align="center">
 
  |  Component                    | Arduino Pin |
@@ -48,3 +51,5 @@ coming soon ...
 
 # References
 - https://github.com/OttoDIY/PLUS
+- https://github.com/stembotvn/OttoDIY_mBlock_Extension
+
