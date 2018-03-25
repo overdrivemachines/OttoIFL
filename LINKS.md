@@ -55,17 +55,18 @@ https://github.com/cmmakerclub/OTTO
 Videos:
 https://www.youtube.com/watch?v=_1j03H7cwnY&list=PLM8mB7UZ2USdlarFKv-UfXQbgmiuqSqAN&index=10
 
-Otto:
+OttoDIY:
 https://github.com/OttoDIY/DIY
 https://github.com/OttoDIY/PLUS
+
+OttoIFL:
+https://github.com/overdrivemachines/OttoIFL
+https://github.com/sfranzyshen/OttoIFL_WiFi
 
 mBlockExtension:
 https://github.com/stembotvn/OttoDIY_mBlock_Extension
 https://github.com/OttoDIY/OttoDIY_mBlock_Extension
 https://github.com/stembotvn/OttoDIY_XYZ_Examples
-
-other:
-https://github.com/FelixLinSY/IoTTo
 
 avr:
 https://github.com/martin2250/ADCTouch
