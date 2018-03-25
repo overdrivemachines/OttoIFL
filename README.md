@@ -1,5 +1,5 @@
 # OttoIFL
-OttoDIY+ with arms, mp3 Audio, WiFi, Web App, and i2c Led Matrix ...
+Arduino library for controlling the OttoIFL RoBot ...
 
 Mix from OttoDIY opensource Project.  
 http://ottodiy.com 
