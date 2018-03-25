@@ -1,42 +1,43 @@
-facebook:
-https://www.facebook.com/ottodiy/
+
+#facebook
+https://www.facebook.com/ottodiy/ 
 https://www.facebook.com/groups/1185986408211522/
 
-youtube:
+#youtube
 https://www.youtube.com/channel/UC3ER5xv3Nlmiv26anXU9Nwg/featured
 
-twitter:
+#twitter
 https://twitter.com/ottodiy
 
-instagram:
+#instagram
 https://www.instagram.com/explore/tags/ottodiy/
 
-thingiverse:
+#thingiverse
 https://www.thingiverse.com/groups/ottodiy/
 
-tinkercad:
+#tinkercad
 https://www.tinkercad.com/search/?q=otto
 
-hackster:
+#hackster
 https://www.hackster.io/ottodiy
 
-instructables:
+#instructables
 http://www.instructables.com/id/Otto-DIY-Arduino-Bluetooth-Robot-Easy-to-3Dprint/
 
-mblock:
+#mblock
 http://www.mblock.cc/extensions/
 http://www.mblock.cc/docs/create-extensions-for-mblock/
 http://download.makeblock.com/mblock/mblock_extension_guide.pdf
 
-arduino:
+#arduino
 https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ
 
-arduino create:
+#arduino create
 https://create.arduino.cc/projecthub?f=1
 https://create.arduino.cc/projecthub/search?q=otto
 https://create.arduino.cc/projecthub/otto-pcb/otto-diy-diy-pcb-7f95a1?ref=search&ref_id=otto&offset=2
 
-remixes:
+#remixes
 https://github.com/sushicodeur/OttoOnEsp
 https://github.com/FelixLinSY/IoTTo
 https://github.com/jarsoftelectrical/OTTO-DIY---app
@@ -49,29 +50,29 @@ https://github.com/dlevstek/Otto
 https://github.com/TrendonixNetwork/Totto
 https://github.com/jarsoftelectrical/My-OTTO
 
-snippits:
+#snippits
 https://github.com/cmmakerclub/OTTO
 
-Videos:
+#Videos
 https://www.youtube.com/watch?v=_1j03H7cwnY&list=PLM8mB7UZ2USdlarFKv-UfXQbgmiuqSqAN&index=10
 
-OttoDIY:
+#OttoDIY
 https://github.com/OttoDIY/DIY
 https://github.com/OttoDIY/PLUS
 
-OttoIFL:
+#OttoIFL
 https://github.com/overdrivemachines/OttoIFL
 https://github.com/sfranzyshen/OttoIFL_WiFi
 
-mBlockExtension:
+#mBlock Extension
 https://github.com/stembotvn/OttoDIY_mBlock_Extension
 https://github.com/OttoDIY/OttoDIY_mBlock_Extension
 https://github.com/stembotvn/OttoDIY_XYZ_Examples
 
-avr:
+#Avr
 https://github.com/martin2250/ADCTouch
 
-esp8266:
+#Esp8266
 https://github.com/earlephilhower/ESP8266Audio - AudioOutputI2SNoDAC
 https://github.com/plerup/espsoftwareserial - SoftwareSerial
 
