@@ -47,7 +47,38 @@ coming soon ...
  |  LED Matrix (HT16K33)  scl    | A5          |
  |  Analog Sound Sensor (MEMS)   | A6          |
  |                               | A7          |
+
+## OttoIFL ToDo:
+### [Arduino (avr)]
+- port mouth code from max7219 to HT16K33
+- expand otto for arm gpios (init, and for loops, ...)
+- unify the ottoserial and softwareserial (so we don't need seperate version of the programs ... ie _BT)
+- expand otto serial commands to use audio (mp3) commands and arm movement functions
+- modify predetermined motion functions to use arm movements (home, jump, walk, ...)
+- expand predetermined motion functions to have arm only movements ... and new handstand/somersault
+- modify predetermined gestures functions to use arm movements and audio (OttoHappy, OttoSuperHappy, ..)
+- port legacy smooth criminal movements into otto.c
+- port legacy ottodiy and ottodiy plus code to mBlocks (smooth criminal)
+- expand legacy ottodiy and ottodiy plus code to use arms and audio functions
+### [Arduino (esp8266)]
+- emulate bluetooth interface (espsoftserial)
+- ESP8266Audio
+- WiFi
+- HTTPServer
+- WebSockets
+- Web APP
+### [Web App]
+- mimic bluetooth app
+- javascript
+- svg
+- websockets
+### [3D Modeling]
+- DIY: head, body, arms
+- PLUS: head, body, arms
+- glue on features for hair, eyes, and mouth for several age groups ...  young: barn yard animals  older: super heros and  teen/adult: south park, simpsons, futurama, etc ... 
+ 
 ## Scratch Programming in mBlock 
+- https://github.com/sfranzyshen/OttoIFL_mBlock
 
 # References
 - https://github.com/overdrivemachines/OttoIFL
