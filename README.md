@@ -76,7 +76,11 @@ coming soon ...
 - DIY: head, body, arms
 - PLUS: head, body, arms
 - glue on features for hair, eyes, and mouth for several age groups ...  young: barn yard animals  older: super heros and  teen/adult: south park, simpsons, futurama, etc ... 
- 
+
+### [Documentation]
+### [Internet Presence]
+### [Media Production]
+
 ## Scratch Programming in mBlock 
 - https://github.com/sfranzyshen/OttoIFL_mBlock
 
