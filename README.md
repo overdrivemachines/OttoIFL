@@ -11,7 +11,7 @@ http://ottodiy.com
 - Web App
 - Mp3 Audio 
 - Led Matrix (i2c)
-- RGB Led Nose (5mm)
+- RGB Led Nose (NeoPixel)
 - mBlocks Extention
 - mBlocks Examples (Calibration, Smooth Criminal ...)
 - Arduino Library
@@ -21,7 +21,7 @@ http://ottodiy.com
 coming soon ...
 
 ## Hardware
-<img src="https://github.com/sfranzyshen/OttoIFL/blob/master/media/connection.png" width="500" align="center">
+<img src="https://github.com/sfranzyshen/OttoIFL/blob/master/extras/media/connection.png" width="500" align="center">
 
  |  Component                    | Arduino Pin |
  | --- | --- |
@@ -47,6 +47,12 @@ coming soon ...
  |  LED Matrix (HT16K33)  scl    | A5          |
  |  Analog Sound Sensor (MEMS)   | A6          |
  |                               | A7          |
+ 
+## OttoIFL 3D Models:
+- https://github.com/sfranzyshen/OttoIFL_3D
+
+## Scratch Programming in mBlock 
+- https://github.com/sfranzyshen/OttoIFL_mBlock
 
 ## OttoIFL ToDo:
 ### [Arduino (avr)]
@@ -76,12 +82,14 @@ coming soon ...
 - DIY: head, body, arms
 - PLUS: head, body, arms
 - glue on features for hair, eyes, and mouth for several age groups ...  young: barn yard animals  older: super heros and  teen/adult: south park, simpsons, futurama, etc ... 
- 
-## Scratch Programming in mBlock 
-- https://github.com/sfranzyshen/OttoIFL_mBlock
+
+### [Documentation]
+### [Internet Presence]
+### [Media Production]
 
 # References
 - https://github.com/overdrivemachines/OttoIFL
 - https://github.com/sfranzyshen/OttoIFL_mBlock
 - https://github.com/OttoDIY/PLUS
-
+- https://github.com/stembotvn/OttoDIY_mBlock_Extension
+- https://github.com/OttoDIY/OttoDIY_mBlock_Extension
