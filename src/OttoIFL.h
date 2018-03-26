@@ -1,6 +1,20 @@
 #ifndef Otto_h
 #define Otto_h
 
+/**
+ *                   +-------+
+ *                   | () () |
+ *                   |       |
+ *                   +-------+
+ *  ARM_R D11==> +---|       |---+ <== ARM_L D10
+ *               +---|       |---+
+ *       LEG_R D3==> |-+   +-| <== LEG_L D2
+ *                   +-+---+-+
+ *                   | |   | |
+ *   FOOT_R D5==> +--+-+   +-+--+ <== FOOT_L D4
+ *                +--+-+   +-+--+
+ */
+
 #include <Servo.h>
 #include "Oscillator.h"
 //#include <EEPROM.h>
@@ -23,10 +37,17 @@
 #define MEDIUM      15
 #define BIG         30
 
-#define HIP_L   2        // connect Servo Hip left to D2
-#define FOOT_L  4        // Connect Servo Foot Left to D4
-#define HIP_R   3        // Connect Servo Hip right to D3
-#define FOOT_R  5        // COnnect Servo Foot Right to D5
+// TODO: Determine if these are needed
+// #define HIP_L   2        // connect Servo Hip left to D2
+// #define FOOT_L  4        // Connect Servo Foot Left to D4
+// #define HIP_R   3        // Connect Servo Hip right to D3
+// #define FOOT_R  5        // COnnect Servo Foot Right to D5
+#define ARM_L       10
+#define ARM_R       11
+#define LEG_L       2
+#define LEG_R       3
+#define FOOT_L      4
+#define FOOT_R      5
 
 #define PIN_Buzzer  13
 #define PIN_Trigger 8
