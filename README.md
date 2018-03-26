@@ -11,7 +11,7 @@ http://ottodiy.com
 - Web App
 - Mp3 Audio 
 - Led Matrix (i2c)
-- RGB Led Nose (5mm)
+- RGB Led Nose (NeoPixel)
 - mBlocks Extention
 - mBlocks Examples (Calibration, Smooth Criminal ...)
 - Arduino Library
@@ -21,7 +21,7 @@ http://ottodiy.com
 coming soon ...
 
 ## Hardware
-<img src="https://github.com/sfranzyshen/OttoIFL/blob/master/media/connection.png" width="500" align="center">
+<img src="https://github.com/sfranzyshen/OttoIFL/blob/master/extras/media/connection.png" width="500" align="center">
 
  |  Component                    | Arduino Pin |
  | --- | --- |
@@ -84,4 +84,5 @@ coming soon ...
 - https://github.com/overdrivemachines/OttoIFL
 - https://github.com/sfranzyshen/OttoIFL_mBlock
 - https://github.com/OttoDIY/PLUS
-
+- https://github.com/stembotvn/OttoDIY_mBlock_Extension
+- https://github.com/OttoDIY/OttoDIY_mBlock_Extension
