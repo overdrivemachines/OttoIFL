@@ -51,6 +51,9 @@ coming soon ...
 ## OttoIFL 3D Models:
 - https://github.com/sfranzyshen/OttoIFL_3D
 
+## Scratch Programming in mBlock 
+- https://github.com/sfranzyshen/OttoIFL_mBlock
+
 ## OttoIFL ToDo:
 ### [Arduino (avr)]
 - port mouth code from max7219 to HT16K33
@@ -83,9 +86,6 @@ coming soon ...
 ### [Documentation]
 ### [Internet Presence]
 ### [Media Production]
-
-## Scratch Programming in mBlock 
-- https://github.com/sfranzyshen/OttoIFL_mBlock
 
 # References
 - https://github.com/overdrivemachines/OttoIFL
