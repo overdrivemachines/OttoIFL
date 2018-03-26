@@ -47,6 +47,9 @@ coming soon ...
  |  LED Matrix (HT16K33)  scl    | A5          |
  |  Analog Sound Sensor (MEMS)   | A6          |
  |                               | A7          |
+ 
+## OttoIFL 3D Models:
+- https://github.com/sfranzyshen/OttoIFL_3D
 
 ## OttoIFL ToDo:
 ### [Arduino (avr)]
