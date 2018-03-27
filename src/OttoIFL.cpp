@@ -601,16 +601,16 @@ unsigned long int Otto::getAnimShape(int anim, int index){
 
 void Otto::putAnimationMouth(unsigned long int aniMouth, int index){
 
-      ledmatrix.writeFull(getAnimShape(aniMouth,index));
+      writeFull(getAnimShape(aniMouth,index));
 }
 
 void Otto::putMouth(unsigned long int mouth, bool predefined){
 
   if (predefined){
-    ledmatrix.writeFull(getMouthShape(mouth));
+    writeFull(getMouthShape(mouth));
   }
   else{
-    ledmatrix.writeFull(mouth);
+    writeFull(mouth);
   }
 }
 
