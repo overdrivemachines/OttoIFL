@@ -17,6 +17,20 @@
 #include "Otto_gestures.h"
 #include "SoftSerialCommand.h"
 
+/**
+ *                   +-------+
+ *                   | () () |
+ *                   |       |
+ *                   +-------+
+ *  ARM_R D11==> +---|       |---+ <== ARM_L D10
+ *               +---|       |---+
+ *   LEG_R D3==>     |-+   +-|     <== LEG_L D2
+ *                   +-+---+-+
+ *                   | |   | |
+ *  FOOT_R D5==>  +--+-+   +-+--+ <== FOOT_L D4
+ *                +--+-+   +-+--+
+ */
+
 //-- Constants
 #define FORWARD     1
 #define BACKWARD    -1
@@ -26,19 +40,50 @@
 #define MEDIUM      15
 #define BIG         30
 
-#define HIP_L   2        // connect Servo Hip left to D2
-#define FOOT_L  4        // Connect Servo Foot Left to D4
-#define HIP_R   3        // Connect Servo Hip right to D3
-#define FOOT_R  5        // COnnect Servo Foot Right to D5
+// TODO: Determine if these are needed
+// #define HIP_L   2        // connect Servo Hip left to D2
+// #define FOOT_L  4        // Connect Servo Foot Left to D4
+// #define HIP_R   3        // Connect Servo Hip right to D3
+// #define FOOT_R  5        // COnnect Servo Foot Right to D5
+#define ARM_L       10      // Servo Arm left
+#define ARM_R       11      // Servo Arm right
+#define LEG_L       2       // Servo Leg left
+#define LEG_R       3       // Servo Leg right
+#define FOOT_L      4       // Servo Foot left
+#define FOOT_R      5       // Servo Foot right
 
-#define PIN_Buzzer  13
-#define PIN_Trigger 8
-#define PIN_Echo    9
-#define PIN_NoiseSensor A6
-///define Bluetooth in SoftwareSerial 
+// Bluetooth in SoftwareSerial
+// TODO: Define Wifi Pins
 #define BT_Rx   6  
 #define BT_Tx   7
-//define Max7219 pins 
+
+// Ultrasonic SRF04
+#define PIN_Trigger 8       // Ultrasonic SRF04
+#define PIN_Echo    9       // Ultrasonic SRF04
+
+// RGB LED 5mm (APA106)
+#define PIN_RGB_LED 12
+
+// Piezo Buzzer
+#define PIN_Buzzer  13
+
+// Light sensor
+#define PIN_LIGHTSENSOR_L   A0
+#define PIN_LIGHTSENSOR_R   A1
+
+// ADCTouch Buttons
+#define PIN_TOUCH1          A2
+#define PIN_TOUCH2          A3
+
+// LED Matrix (HT16K33)
+#define PIN_SDA             A4
+#define PIN_SCL             A5
+
+// Analog Sound Sensor (MEMS)
+#define PIN_NoiseSensor A6 
+
+// Old Code: define Max7219 pins
+// TODO: Define correct LED pins
 #define PIN_DIN    10   //max 7219
 #define PIN_CS     11
 #define PIN_CLK    12

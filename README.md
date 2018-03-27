@@ -39,8 +39,8 @@ coming soon ...
  |  Servo Arm right              | D11         |
  |  RGB LED  5mm (APA106)        | D12         |
  |  Piezo Buzzer                 | D13         |
- |  Light sensor (Right)         | A0          |
- |  Light Sensor (Left)          | A1          |
+ |  Light sensor (Left)          | A0          |
+ |  Light Sensor (Right)         | A1          |
  |  Button 1 / ADCTouch          | A2          |
  |  Button 2 / ADCTouch          | A3          |
  |  LED Matrix (HT16K33)  sda    | A4          |
