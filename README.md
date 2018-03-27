@@ -51,6 +51,9 @@ coming soon ...
 ## OttoIFL 3D Models:
 - https://github.com/sfranzyshen/OttoIFL_3D
 
+## OttoIFL WiFi (Mp3) Module
+- https://github.com/sfranzyshen/OttoIFL_WiFi
+
 ## Scratch Programming in mBlock 
 - https://github.com/sfranzyshen/OttoIFL_mBlock
 
