@@ -43,9 +43,9 @@ void Otto::init(int YL, int YR, int RL, int RR, bool load_calibration, int Noise
   pinMode(Buzzer,OUTPUT);
   pinMode(NoiseSensor,INPUT);
   
-  ledmatrix.init();
-  ledmatrix.setIntensity(1);
-
+  //ledmatrix.init();
+  //ledmatrix.setIntensity(1);
+  ledmatrix.begin(0x70); // pass in the address
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -601,30 +601,33 @@ unsigned long int Otto::getAnimShape(int anim, int index){
 
 void Otto::putAnimationMouth(unsigned long int aniMouth, int index){
 
-      ledmatrix.writeFull(getAnimShape(aniMouth,index));
+      writeFull(getAnimShape(aniMouth,index));
 }
-
 
 void Otto::putMouth(unsigned long int mouth, bool predefined){
 
   if (predefined){
-    ledmatrix.writeFull(getMouthShape(mouth));
+    writeFull(getMouthShape(mouth));
   }
   else{
-    ledmatrix.writeFull(mouth);
+    writeFull(mouth);
   }
 }
 
-
-void Otto::clearMouth(){
-
-  ledmatrix.clearMatrix();
+void Otto::writeFull(unsigned long value) {
+  ledmatrix.clear(); // clear display?
+  for (int r=0; r<5;r++) { // 0 - 4 (5)
+    for (int c=0; c<6; c++) { // 0 - 5 (6)
+      ledmatrix.drawPixel(6-c,7-r,(1L & (value >> r*6+c)));
+    }
+  }
+  ledmatrix.writeDisplay();  // write the changes we just made to the displa
 }
 
-
-
-
-
+void Otto::clearMouth() {
+  // ledmatrix.clearMatrix();
+  ledmatrix.clear();
+}
 
 ///////////////////////////////////////////////////////////////////
 //-- SENSORS FUNCTIONS  -----------------------------------------//

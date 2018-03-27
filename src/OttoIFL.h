@@ -6,8 +6,11 @@
 #include <EEPROM.h>
 
 #include <US.h>
-#include "MaxMatrix.h"
+//#include "MaxMatrix.h"
 #include <BatReader.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_LEDBackpack.h>
 
 #include "Otto_mouths.h"
 #include "Otto_sounds.h"
@@ -145,7 +148,8 @@ class Otto
     void putMouth(unsigned long int mouth, bool predefined = true);
     void putAnimationMouth(unsigned long int anim, int index);
     void clearMouth();
- 
+    void writeFull(unsigned long value);
+  
     //-- Sounds
     void _tone (float noteFrequency, long noteDuration, int silentDuration);
     void _playNote(float noteFrequency, long noteDuration);
@@ -159,8 +163,8 @@ class Otto
  
   private:
     
-    MaxMatrix ledmatrix=MaxMatrix(PIN_DIN,PIN_CS,PIN_CLK, 1);  // init Max7219 LED Matrix, 1 module
-
+    //MaxMatrix ledmatrix=MaxMatrix(PIN_DIN,PIN_CS,PIN_CLK, 1);  // init Max7219 LED Matrix, 1 module
+    Adafruit_8x8matrix ledmatrix=Adafruit_8x8matrix();
     BatReader battery;
     Oscillator servo[4];
     US us;
