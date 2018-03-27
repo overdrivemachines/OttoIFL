@@ -2,12 +2,12 @@
 #define Otto_h
 
 #include <Servo.h>
-#include "Oscillator.h"
-//#include <EEPROM.h>
+#include <Oscillator.h>
+#include <EEPROM.h>
 
-#include "US.h"
-#include "BatReader.h"
+#include <US.h>
 //#include "MaxMatrix.h"
+#include <BatReader.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_LEDBackpack.h>
@@ -92,7 +92,13 @@ class Otto
 {
   public:
     //-- Otto initialization
-    void init(int YL, int YR, int RL, int RR, bool load_calibration=true, int NoiseSensor=PIN_NoiseSensor, int Buzzer=PIN_Buzzer, int USTrigger=PIN_Trigger, int USEcho=PIN_Echo);
+    // void init(int YL, int YR, int RL, int RR, 
+    //     bool load_calibration=true, int NoiseSensor=PIN_NoiseSensor, 
+    //     int Buzzer=PIN_Buzzer, int USTrigger=PIN_Trigger, 
+    //     int USEcho=PIN_Echo);
+    void init(int AL = 10, int AR = 11, 
+        int LL = 2, int LR = 3, 
+        int FL = 4, int FR = 5);
 
     //-- Attach & detach functions
     void attachServos();
@@ -104,7 +110,8 @@ class Otto
 
     //-- Predetermined Motion Functions
     void _moveServos(int time, int  servo_target[]);
-    void oscillateServos(int A[4], int O[4], int T, double phase_diff[4], float cycle);
+    void oscillateServos(int A[4], int O[4], int T, 
+        double phase_diff[4], float cycle);
 
     //-- HOME = Otto at rest position
     void home();
@@ -146,7 +153,8 @@ class Otto
     //-- Sounds
     void _tone (float noteFrequency, long noteDuration, int silentDuration);
     void _playNote(float noteFrequency, long noteDuration);
-    void bendTones (float initFrequency, float finalFrequency, float prop, long noteDuration, int silentDuration);
+    void bendTones (float initFrequency, float finalFrequency, 
+        float prop, long noteDuration, int silentDuration);
     void sing(int songName);
 
     //-- Gestures
