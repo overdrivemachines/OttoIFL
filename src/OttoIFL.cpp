@@ -131,17 +131,21 @@ void Otto::detachServos(){
 ///////////////////////////////////////////////////////////////////
 //-- OSCILLATORS TRIMS ------------------------------------------//
 ///////////////////////////////////////////////////////////////////
-void Otto::setTrims(int YL, int YR, int RL, int RR) {
-  servo[0].SetTrim(YL);
-  servo[1].SetTrim(YR);
-  servo[2].SetTrim(RL);
-  servo[3].SetTrim(RR);
+void Otto::setTrims(int LL, int LR, int FL, int FR, int AL, int AR) 
+{
+  servo[0].SetTrim(LL);
+  servo[1].SetTrim(LR);
+  servo[2].SetTrim(FL);
+  servo[3].SetTrim(FR);
+  servo[4].SetTrim(AL);
+  servo[5].SetTrim(AR);
 }
 
-void Otto::saveTrimsOnEEPROM() {
-  
-  for (int i = 0; i < 4; i++){ 
-      EEPROM.write(i, servo[i].getTrim());
+void Otto::saveTrimsOnEEPROM() 
+{  
+  for (int i = 0; i < SERVO_COUNT; i++)
+  { 
+    EEPROM.write(i, servo[i].getTrim());
   } 
       
 }
