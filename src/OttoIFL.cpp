@@ -13,25 +13,76 @@
 
 
 
-void Otto::init(int YL, int YR, int RL, int RR, bool load_calibration, int NoiseSensor, int Buzzer, int USTrigger, int USEcho) {
+// void Otto::init(int YL, int YR, int RL, int RR, 
+//   bool load_calibration, int NoiseSensor, 
+//   int Buzzer, int USTrigger, int USEcho) {
   
-  servo_pins[0] = YL;
-  servo_pins[1] = YR;
-  servo_pins[2] = RL;
-  servo_pins[3] = RR;
+//   servo_pins[0] = YL;
+//   servo_pins[1] = YR;
+//   servo_pins[2] = RL;
+//   servo_pins[3] = RR;
+
+//   attachServos();
+//   isOttoResting=false;
+
+//   if (load_calibration) {
+//     for (int i = 0; i < 4; i++) {
+//       int servo_trim = EEPROM.read(i);
+//       if (servo_trim > 128) servo_trim -= 256;
+//       servo[i].SetTrim(servo_trim);
+//     }
+//   } 
+  
+//   for (int i = 0; i < 4; i++) servo_position[i] = 90;
+
+//   //US sensor init with the pins:
+//   us.init(USTrigger, USEcho);
+
+//   //Buzzer & noise sensor pins: 
+//   pinBuzzer = Buzzer;
+//   pinNoiseSensor = NoiseSensor;
+
+//   pinMode(Buzzer,OUTPUT);
+//   pinMode(NoiseSensor,INPUT);
+  
+//   //ledmatrix.init();
+//   //ledmatrix.setIntensity(1);
+//   //TODO: check if successful
+//   ledmatrix.begin(0x70); // pass in the address
+// }
+
+void Otto::init(int LL = LEG_L, int LR = LEG_R, 
+  int FL = FOOT_L, int FR = FOOT_R,
+  bool load_calibration = true,
+  int NoiseSensor=PIN_NoiseSensor, int Buzzer=PIN_Buzzer, 
+  int USTrigger=PIN_Trigger, int USEcho=PIN_Echo, 
+  int AL = ARM_L, int AR = ARM_R)
+{
+  servo_pins[0] = LL;
+  servo_pins[1] = LR;
+  servo_pins[2] = FL;
+  servo_pins[3] = FR;
+  servo_pins[4] = AL;
+  servo_pins[5] = AR;
 
   attachServos();
-  isOttoResting=false;
-/*
-  if (load_calibration) {
-    for (int i = 0; i < 4; i++) {
+  isOttoResting = false;
+
+  if (load_calibration)
+  {
+    for (int i = 0; i < SERVO_COUNT; i++) 
+    {
+      // TODO: change EEPROM to read from 0..6
       int servo_trim = EEPROM.read(i);
-      if (servo_trim > 128) servo_trim -= 256;
+      if (servo_trim > 128) 
+        servo_trim -= 256;
+      // TODO: change servo size
       servo[i].SetTrim(servo_trim);
     }
-  } */
-  
-  for (int i = 0; i < 4; i++) servo_position[i] = 90;
+  }
+
+  for (int i = 0; i < SERVO_COUNT; i++) 
+    servo_position[i] = 90;
 
   //US sensor init with the pins:
   us.init(USTrigger, USEcho);
@@ -45,45 +96,60 @@ void Otto::init(int YL, int YR, int RL, int RR, bool load_calibration, int Noise
   
   //ledmatrix.init();
   //ledmatrix.setIntensity(1);
+  //TODO: check if successful
   ledmatrix.begin(0x70); // pass in the address
+
 }
 
 ///////////////////////////////////////////////////////////////////
 //-- ATTACH & DETACH FUNCTIONS ----------------------------------//
 ///////////////////////////////////////////////////////////////////
-void Otto::attachServos(){
-    servo[0].attach(servo_pins[0]);
-    servo[1].attach(servo_pins[1]);
-    servo[2].attach(servo_pins[2]);
-    servo[3].attach(servo_pins[3]);
+void Otto::attachServos()
+{
+  // servo[] is an Oscillator object
+  for (int i = 0; i < SERVO_COUNT; ++i)
+  {
+    servo[i].attach(servo_pins[i]);
+  }
+  // servo[0].attach(servo_pins[0]);
+  // servo[1].attach(servo_pins[1]);
+  // servo[2].attach(servo_pins[2]);
+  // servo[3].attach(servo_pins[3]);
 }
 
 void Otto::detachServos(){
-    servo[0].detach();
-    servo[1].detach();
-    servo[2].detach();
-    servo[3].detach();
+  for (int i = 0; i < SERVO_COUNT; ++i)
+  {
+    servo[i].detach();
+  }
+  // servo[0].detach();
+  // servo[1].detach();
+  // servo[2].detach();
+  // servo[3].detach();
 }
 
 ///////////////////////////////////////////////////////////////////
 //-- OSCILLATORS TRIMS ------------------------------------------//
 ///////////////////////////////////////////////////////////////////
-/*
-void Otto::setTrims(int YL, int YR, int RL, int RR) {
-  servo[0].SetTrim(YL);
-  servo[1].SetTrim(YR);
-  servo[2].SetTrim(RL);
-  servo[3].SetTrim(RR);
+void Otto::setTrims(int LL, int LR, int FL, int FR, int AL, int AR) 
+{
+  servo[0].SetTrim(LL);
+  servo[1].SetTrim(LR);
+  servo[2].SetTrim(FL);
+  servo[3].SetTrim(FR);
+  servo[4].SetTrim(AL);
+  servo[5].SetTrim(AR);
 }
 
-void Otto::saveTrimsOnEEPROM() {
-  
-  for (int i = 0; i < 4; i++){ 
-      EEPROM.write(i, servo[i].getTrim());
+void Otto::saveTrimsOnEEPROM() 
+{  
+  for (int i = 0; i < SERVO_COUNT; i++)
+  { 
+    EEPROM.write(i, servo[i].getTrim());
   } 
       
 }
-*/
+
 
 ///////////////////////////////////////////////////////////////////
 //-- BASIC MOTION FUNCTIONS -------------------------------------//
