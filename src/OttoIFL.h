@@ -98,6 +98,7 @@ class Otto
     //     int USEcho=PIN_Echo);
     void init(int LL = LEG_L, int LR = LEG_R, 
       int FL = FOOT_L, int FR = FOOT_R,
+      bool load_calibration=true,
       int NoiseSensor=PIN_NoiseSensor, int Buzzer=PIN_Buzzer, 
       int USTrigger=PIN_Trigger, int USEcho=PIN_Echo, 
       int AL = ARM_L, int AR = ARM_R);
