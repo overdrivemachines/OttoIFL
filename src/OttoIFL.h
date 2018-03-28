@@ -45,17 +45,17 @@
 // #define FOOT_L  4        // Connect Servo Foot Left to D4
 // #define HIP_R   3        // Connect Servo Hip right to D3
 // #define FOOT_R  5        // COnnect Servo Foot Right to D5
-#define ARM_L       10      // Servo Arm left
-#define ARM_R       11      // Servo Arm right
+#define SERVO_COUNT 6
 #define LEG_L       2       // Servo Leg left
 #define LEG_R       3       // Servo Leg right
 #define FOOT_L      4       // Servo Foot left
 #define FOOT_R      5       // Servo Foot right
+#define ARM_L       10      // Servo Arm left
+#define ARM_R       11      // Servo Arm right
 
-// Bluetooth in SoftwareSerial
-// TODO: Define Wifi Pins
-#define BT_Rx   6  
-#define BT_Tx   7
+// SoftwareSerial
+#define SS_Rx   6  
+#define SS_Tx   7
 
 // Ultrasonic SRF04
 #define PIN_Trigger 8       // Ultrasonic SRF04
@@ -71,16 +71,16 @@
 #define PIN_LIGHTSENSOR_L   A0
 #define PIN_LIGHTSENSOR_R   A1
 
-// ADCTouch Buttons
-#define PIN_TOUCH1          A2
-#define PIN_TOUCH2          A3
+// ADCTouch/Buttons
+#define PIN_BUTTON1         A2
+#define PIN_BUTTON2         A3
 
 // LED Matrix (HT16K33)
 #define PIN_SDA             A4
 #define PIN_SCL             A5
 
 // Analog Sound Sensor (MEMS)
-#define PIN_NoiseSensor A6 
+#define PIN_NoiseSensor     A6 
 
 // Old Code: define Max7219 pins
 // TODO: Define correct LED pins
@@ -96,17 +96,19 @@ class Otto
     //     bool load_calibration=true, int NoiseSensor=PIN_NoiseSensor, 
     //     int Buzzer=PIN_Buzzer, int USTrigger=PIN_Trigger, 
     //     int USEcho=PIN_Echo);
-    void init(int AL = 10, int AR = 11, 
-        int LL = 2, int LR = 3, 
-        int FL = 4, int FR = 5);
+    void init(int LL = LEG_L, int LR = LEG_R, 
+      int FL = FOOT_L, int FR = FOOT_R,
+      int NoiseSensor=PIN_NoiseSensor, int Buzzer=PIN_Buzzer, 
+      int USTrigger=PIN_Trigger, int USEcho=PIN_Echo, 
+      int AL = ARM_L, int AR = ARM_R);
 
     //-- Attach & detach functions
     void attachServos();
     void detachServos();
 
     //-- Oscillator Trims
-    //  void setTrims(int YL, int YR, int RL, int RR);
-    // void saveTrimsOnEEPROM();
+    void setTrims(int YL, int YR, int RL, int RR);
+    void saveTrimsOnEEPROM();
 
     //-- Predetermined Motion Functions
     void _moveServos(int time, int  servo_target[]);
@@ -166,12 +168,12 @@ class Otto
     //MaxMatrix ledmatrix=MaxMatrix(PIN_DIN,PIN_CS,PIN_CLK, 1);  // init Max7219 LED Matrix, 1 module
     Adafruit_8x8matrix ledmatrix=Adafruit_8x8matrix();
     BatReader battery;
-    Oscillator servo[4];
+    Oscillator servo[SERVO_COUNT];
     US us;
 
-    int servo_pins[4];
-    int servo_trim[4];
-    int servo_position[4];
+    int servo_pins[SERVO_COUNT];
+    int servo_trim[SERVO_COUNT];
+    int servo_position[SERVO_COUNT];
 
     int pinBuzzer;
     int pinNoiseSensor;
