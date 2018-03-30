@@ -108,7 +108,7 @@ class Otto
     void detachServos();
 
     //-- Oscillator Trims
-    void setTrims(int YL, int YR, int RL, int RR);
+    void setTrims(int LL, int LR, int FL, int FR, int AL, int AR);
     void saveTrimsOnEEPROM();
 
     //-- Predetermined Motion Functions
