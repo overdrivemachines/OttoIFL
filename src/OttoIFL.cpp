@@ -11,46 +11,6 @@
 #include "Oscillator.h"
 #include "US.h"
 
-
-
-// void Otto::init(int YL, int YR, int RL, int RR, 
-//   bool load_calibration, int NoiseSensor, 
-//   int Buzzer, int USTrigger, int USEcho) {
-  
-//   servo_pins[0] = YL;
-//   servo_pins[1] = YR;
-//   servo_pins[2] = RL;
-//   servo_pins[3] = RR;
-
-//   attachServos();
-//   isOttoResting=false;
-
-//   if (load_calibration) {
-//     for (int i = 0; i < 4; i++) {
-//       int servo_trim = EEPROM.read(i);
-//       if (servo_trim > 128) servo_trim -= 256;
-//       servo[i].SetTrim(servo_trim);
-//     }
-//   } 
-  
-//   for (int i = 0; i < 4; i++) servo_position[i] = 90;
-
-//   //US sensor init with the pins:
-//   us.init(USTrigger, USEcho);
-
-//   //Buzzer & noise sensor pins: 
-//   pinBuzzer = Buzzer;
-//   pinNoiseSensor = NoiseSensor;
-
-//   pinMode(Buzzer,OUTPUT);
-//   pinMode(NoiseSensor,INPUT);
-  
-//   //ledmatrix.init();
-//   //ledmatrix.setIntensity(1);
-//   //TODO: check if successful
-//   ledmatrix.begin(0x70); // pass in the address
-// }
-
 void Otto::init(int LL = LEG_L, int LR = LEG_R, 
   int FL = FOOT_L, int FR = FOOT_R,
   bool load_calibration = true,
@@ -231,13 +191,15 @@ void Otto::home(){
   }
 }
 
-bool Otto::getRestState(){
-
+// Getter function for isOttoResting
+bool Otto::getRestState()
+{
     return isOttoResting;
 }
 
-void Otto::setRestState(bool state){
-
+// Setter function for isOttoResting
+void Otto::setRestState(bool state)
+{
     isOttoResting = state;
 }
 
