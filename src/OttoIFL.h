@@ -153,7 +153,7 @@ class Otto
     
     Adafruit_8x8matrix ledmatrix = Adafruit_8x8matrix();
     void writeFull(unsigned long value);
-    SoftwareSerial SerialSoft;
+    SoftwareSerial SerialSoft(PIN_SSRx, PIN_SSTx); //FIXME: add soft pins to the init function so it can be overridden
     BatReader battery;
     Oscillator servo[SERVO_COUNT];
     US us;
