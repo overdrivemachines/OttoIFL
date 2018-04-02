@@ -6,16 +6,16 @@
 #include <EEPROM.h>
 
 #include <US.h>
-//#include "MaxMatrix.h"
 #include <BatReader.h>
 #include <Wire.h>
+//FIXME: find a simpler HT16K33 driver (adafruit is bulk)
 #include <Adafruit_GFX.h>
 #include <Adafruit_LEDBackpack.h>
 
 #include "Otto_mouths.h"
 #include "Otto_sounds.h"
 #include "Otto_gestures.h"
-#include "SoftSerialCommand.h"
+#include "OttoSerialCommand.h"
 
 /**
  *                   +-------+
@@ -40,11 +40,6 @@
 #define MEDIUM      15
 #define BIG         30
 
-// TODO: Determine if these are needed
-// #define HIP_L   2        // connect Servo Hip left to D2
-// #define FOOT_L  4        // Connect Servo Foot Left to D4
-// #define HIP_R   3        // Connect Servo Hip right to D3
-// #define FOOT_R  5        // COnnect Servo Foot Right to D5
 #define SERVO_COUNT 6
 #define LEG_L       2       // Servo Leg left
 #define LEG_R       3       // Servo Leg right
@@ -54,54 +49,45 @@
 #define ARM_R       11      // Servo Arm right
 
 // SoftwareSerial
-#define SS_Rx   6  
-#define SS_Tx   7
+#define PIN_SSRx    6  
+#define PIN_SSTx    7
 
 // Ultrasonic SRF04
 #define PIN_Trigger 8       // Ultrasonic SRF04
 #define PIN_Echo    9       // Ultrasonic SRF04
 
 // RGB LED 5mm (APA106)
-#define PIN_RGB_LED 12
+#define PIN_RGBLED  12
 
 // Piezo Buzzer
 #define PIN_Buzzer  13
 
 // Light sensor
-#define PIN_LIGHTSENSOR_L   A0
-#define PIN_LIGHTSENSOR_R   A1
+#define PIN_LightL          A0
+#define PIN_LightR          A1
 
-// ADCTouch/Buttons
-#define PIN_BUTTON1         A2
-#define PIN_BUTTON2         A3
+// ADCTouch/Switch
+#define PIN_Button1         A2
+#define PIN_Button2         A3
 
 // LED Matrix (HT16K33)
 #define PIN_SDA             A4
 #define PIN_SCL             A5
+#define MATRIX_ADDR         0x70
 
 // Analog Sound Sensor (MEMS)
-#define PIN_NoiseSensor     A6 
-
-// Old Code: define Max7219 pins
-// TODO: Define correct LED pins
-#define PIN_DIN    10   //max 7219
-#define PIN_CS     11
-#define PIN_CLK    12
+#define PIN_Noise           A6 
 
 class Otto
 {
   public:
     //-- Otto initialization
-    // void init(int YL, int YR, int RL, int RR, 
-    //     bool load_calibration=true, int NoiseSensor=PIN_NoiseSensor, 
-    //     int Buzzer=PIN_Buzzer, int USTrigger=PIN_Trigger, 
-    //     int USEcho=PIN_Echo);
     void init(int LL = LEG_L, int LR = LEG_R, 
       int FL = FOOT_L, int FR = FOOT_R,
       bool load_calibration=true,
-      int NoiseSensor=PIN_NoiseSensor, int Buzzer=PIN_Buzzer, 
+      int NoiseSensor=PIN_Noise, int Buzzer=PIN_Buzzer, 
       int USTrigger=PIN_Trigger, int USEcho=PIN_Echo, 
-      int AL = ARM_L, int AR = ARM_R);
+      int AL = ARM_L, int AR = ARM_R); //FIXME: Add SoftwareSerial, RGB LED, Light sensors
 
     //-- Attach & detach functions
     void attachServos();
@@ -151,7 +137,6 @@ class Otto
     void putMouth(unsigned long int mouth, bool predefined = true);
     void putAnimationMouth(unsigned long int anim, int index);
     void clearMouth();
-    void writeFull(unsigned long value);
   
     //-- Sounds
     void _tone (float noteFrequency, long noteDuration, int silentDuration);
@@ -166,8 +151,9 @@ class Otto
  
   private:
     
-    //MaxMatrix ledmatrix=MaxMatrix(PIN_DIN,PIN_CS,PIN_CLK, 1);  // init Max7219 LED Matrix, 1 module
-    Adafruit_8x8matrix ledmatrix=Adafruit_8x8matrix();
+    Adafruit_8x8matrix ledmatrix = Adafruit_8x8matrix();
+    void writeFull(unsigned long value);
+    SoftwareSerial SerialSoft;
     BatReader battery;
     Oscillator servo[SERVO_COUNT];
     US us;
@@ -182,7 +168,7 @@ class Otto
     unsigned long final_time;
     unsigned long partial_time;
     float increment[4];
-
+   
     bool isOttoResting;
 
     unsigned long int getMouthShape(int number);
