@@ -52,7 +52,7 @@ void Otto::init(int LL = LEG_L, int LR = LEG_R,
   pinNoiseSensor = NoiseSensor;
 
   pinMode(Buzzer,OUTPUT);
-  pinMode(Noise,INPUT);
+  pinMode(NoiseSensor,INPUT);
   
   ledmatrix.begin(MATRIX_ADDR); // pass in the address
   //SoftwareSerial SerialSoft(PIN_SSRx, PIN_SSTx);
