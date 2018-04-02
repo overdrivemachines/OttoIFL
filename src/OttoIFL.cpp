@@ -49,13 +49,13 @@ void Otto::init(int LL = LEG_L, int LR = LEG_R,
 
   //Buzzer & noise sensor pins: 
   pinBuzzer = Buzzer;
-  pinNoiseSensor = Noise;
+  pinNoiseSensor = NoiseSensor;
 
   pinMode(Buzzer,OUTPUT);
   pinMode(Noise,INPUT);
   
   ledmatrix.begin(MATRIX_ADDR); // pass in the address
-  SoftwareSerial SerialSoft(PIN_SSRx, PIN_SSTx);
+  //SoftwareSerial SerialSoft(PIN_SSRx, PIN_SSTx);
 }
 
 ///////////////////////////////////////////////////////////////////
