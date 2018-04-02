@@ -14,13 +14,13 @@
 void Otto::init(int LL = LEG_L, int LR = LEG_R, 
   int FL = FOOT_L, int FR = FOOT_R,
   bool load_calibration = true,
-  int NoiseSensor=PIN_NoiseSensor, int Buzzer=PIN_Buzzer, 
+  int NoiseSensor=PIN_Noise, int Buzzer=PIN_Buzzer, 
   int USTrigger=PIN_Trigger, int USEcho=PIN_Echo, 
-  int AL = ARM_L, int AR = ARM_R)
+  int AL = ARM_L, int AR = ARM_R) //FIXME: Add SoftwareSerial, RGB LED, Light sensors
 {
-  servo_pins[0] = LL;
-  servo_pins[1] = LR;
-  servo_pins[2] = FL;
+  servo_pins[0] = LL; //FIXME: CHange this to a for loop using SERVO_COUNT
+  servo_pins[1] = LR; // also setup defines for servos (#define LEFTLEG 0) 
+  servo_pins[2] = FL; // and replace where ever numbers are used ...
   servo_pins[3] = FR;
   servo_pins[4] = AL;
   servo_pins[5] = AR;
@@ -41,7 +41,7 @@ void Otto::init(int LL = LEG_L, int LR = LEG_R,
     }
   }
 
-  for (int i = 0; i < SERVO_COUNT; i++) 
+  for (int i = 0; i < SERVO_COUNT; i++) // set everything to 90 (home)
     servo_position[i] = 90;
 
   //US sensor init with the pins:
@@ -49,16 +49,13 @@ void Otto::init(int LL = LEG_L, int LR = LEG_R,
 
   //Buzzer & noise sensor pins: 
   pinBuzzer = Buzzer;
-  pinNoiseSensor = NoiseSensor;
+  pinNoiseSensor = Noise;
 
   pinMode(Buzzer,OUTPUT);
-  pinMode(NoiseSensor,INPUT);
+  pinMode(Noise,INPUT);
   
-  //ledmatrix.init();
-  //ledmatrix.setIntensity(1);
-  //TODO: check if successful
-  ledmatrix.begin(0x70); // pass in the address
-
+  ledmatrix.begin(MATRIX_ADDR); // pass in the address
+  SoftwareSerial SerialSoft(PIN_SSRx, PIN_SSTx);
 }
 
 ///////////////////////////////////////////////////////////////////
