@@ -11,15 +11,11 @@
 #include "Oscillator.h"
 #include "US.h"
 
-void Otto::init(int LL = LEG_L, int LR = LEG_R, 
-  int FL = FOOT_L, int FR = FOOT_R,
-  bool load_calibration = true,
-  int NoiseSensor=PIN_Noise, int Buzzer=PIN_Buzzer, 
-  int USTrigger=PIN_Trigger, int USEcho=PIN_Echo, 
-  int AL = ARM_L, int AR = ARM_R) //FIXME: Add SoftwareSerial, RGB LED, Light sensors
+void Otto::init(int LL, int LR, int FL, int FR, bool load_calibration, int NoiseSensor, 
+                int Buzzer, int USTrigger, int USEcho, int AL, int AR) //FIXME: Add SoftwareSerial, RGB LED, Light sensors
 {
-  servo_pins[0] = LL; //FIXME: CHange this to a for loop using SERVO_COUNT
-  servo_pins[1] = LR; // also setup defines for servos (#define LEFTLEG 0) 
+  servo_pins[0] = LL; 
+  servo_pins[1] = LR; // FIXME: setup defines for servos (#define SERVO_LL 0) 
   servo_pins[2] = FL; // and replace where ever numbers are used ...
   servo_pins[3] = FR;
   servo_pins[4] = AL;
@@ -62,7 +58,7 @@ void Otto::init(int LL = LEG_L, int LR = LEG_R,
   ledmatrix.setIntensity(0, MATRIX_BRIGHTNESS); // between 0-15
   ledmatrix.shutdown(0, false);                 // need to start it up i.e. false = start up
 
-  //SoftwareSerial SerialSoft(PIN_SSRx, PIN_SSTx);
+  SoftwareSerial SerialSoft(PIN_SSRx, PIN_SSTx);
 }
 
 ///////////////////////////////////////////////////////////////////
