@@ -151,7 +151,7 @@ class Otto
     
     LedControlHT ledmatrix = LedControlHT(MATRIX_ADDR, 8, 1);
     void writeFull(unsigned long value);
-    SoftwareSerial SerialSoft(PIN_SSRx, PIN_SSTx); //FIXME: add soft pins to the init function so it can be overridden
+    SoftwareSerial *SerialSoft; //FIXME: add soft pins to the init function so it can be overridden
     BatReader battery;
     Oscillator servo[SERVO_COUNT];
     US us;
