@@ -4,14 +4,10 @@
 #include <Servo.h>
 #include <Oscillator.h>
 #include <EEPROM.h>
-
 #include <US.h>
 #include <BatReader.h>
 #include <Wire.h>
-//FIXME: find a simpler HT16K33 driver (adafruit is bulk)
-#include <Adafruit_GFX.h>
-#include <Adafruit_LEDBackpack.h>
-
+#include <LedControlHT.h>
 #include "Otto_mouths.h"
 #include "Otto_sounds.h"
 #include "Otto_gestures.h"
@@ -70,10 +66,11 @@
 #define PIN_Button1         A2
 #define PIN_Button2         A3
 
-// LED Matrix (HT16K33)
+// LED Matrix H16K33 / LedControlHK library
 #define PIN_SDA             A4
 #define PIN_SCL             A5
 #define MATRIX_ADDR         0x70
+#define MATRIX_BRIGHTNESS   10 // 0=min, 15=max
 
 // Analog Sound Sensor (MEMS)
 #define PIN_Noise           A6 
@@ -151,8 +148,9 @@ class Otto
  
   private:
     
-    Adafruit_8x8matrix ledmatrix = Adafruit_8x8matrix();
-    void writeFull(unsigned long value);
+    //Adafruit_8x8matrix ledmatrix = Adafruit_8x8matrix();
+    LedControlHT ledmatrix = LedControlHT(MATRIX_ADDR, 8, 1);
+    //void writeFull(unsigned long value);
     SoftwareSerial SerialSoft(PIN_SSRx, PIN_SSTx); //FIXME: add soft pins to the init function so it can be overridden
     BatReader battery;
     Oscillator servo[SERVO_COUNT];
