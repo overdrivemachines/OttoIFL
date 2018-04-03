@@ -1,32 +1,6 @@
 #ifndef Otto_h
 #define Otto_h
 
-#include <Servo.h>
-#include <Oscillator.h>
-#include <EEPROM.h>
-#include <US.h>
-#include <BatReader.h>
-#include <Wire.h>
-#include <LedControlHT.h>
-#include "Otto_mouths.h"
-#include "Otto_sounds.h"
-#include "Otto_gestures.h"
-#include "OttoSerialCommand.h"
-
-/**
- *                   +-------+
- *                   | () () |
- *                   |       |
- *                   +-------+
- *  ARM_R D11==> +---|       |---+ <== ARM_L D10
- *               +---|       |---+
- *   LEG_R D3==>     |-+   +-|     <== LEG_L D2
- *                   +-+---+-+
- *                   | |   | |
- *  FOOT_R D5==>  +--+-+   +-+--+ <== FOOT_L D4
- *                +--+-+   +-+--+
- */
-
 //-- Constants
 #define FORWARD     1
 #define BACKWARD    -1
@@ -74,6 +48,33 @@
 
 // Analog Sound Sensor (MEMS)
 #define PIN_Noise           A6 
+
+#include <Servo.h>
+#include <Oscillator.h>
+#include <EEPROM.h>
+#include <US.h>
+#include <BatReader.h>
+#include <Wire.h>
+#include <LedControlHT.h>
+#include "Otto_mouths.h"
+#include "Otto_sounds.h"
+#include "Otto_gestures.h"
+#include "OttoSerialCommand.h"
+
+/**
+ *                   +-------+
+ *                   | () () |
+ *                   |       |
+ *                   +-------+
+ *  ARM_R D11==> +---|       |---+ <== ARM_L D10
+ *               +---|       |---+
+ *   LEG_R D3==>     |-+   +-|     <== LEG_L D2
+ *                   +-+---+-+
+ *                   | |   | |
+ *  FOOT_R D5==>  +--+-+   +-+--+ <== FOOT_L D4
+ *                +--+-+   +-+--+
+ */
+
 
 class Otto
 {
@@ -148,9 +149,8 @@ class Otto
  
   private:
     
-    //Adafruit_8x8matrix ledmatrix = Adafruit_8x8matrix();
     LedControlHT ledmatrix = LedControlHT(MATRIX_ADDR, 8, 1);
-    //void writeFull(unsigned long value);
+    void writeFull(unsigned long value);
     SoftwareSerial SerialSoft(PIN_SSRx, PIN_SSTx); //FIXME: add soft pins to the init function so it can be overridden
     BatReader battery;
     Oscillator servo[SERVO_COUNT];
