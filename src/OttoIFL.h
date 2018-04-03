@@ -146,12 +146,14 @@ class Otto
     //-- Gestures
     void playGesture(int gesture);
 
- 
+    //-- SoftwareSerial
+    SoftwareSerial *SerialSoft;
+
   private:
     
     LedControlHT ledmatrix = LedControlHT(MATRIX_ADDR, 8, 1);
     void writeFull(unsigned long value);
-    SoftwareSerial *SerialSoft; //FIXME: add soft pins to the init function so it can be overridden
+
     BatReader battery;
     Oscillator servo[SERVO_COUNT];
     US us;
