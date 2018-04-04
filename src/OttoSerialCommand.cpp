@@ -17,9 +17,11 @@
 
 
 // Constructor makes sure some things are set. 
+//OttoSerialCommand::OttoSerialCommand(SoftwareSerial &SoftSer)
 OttoSerialCommand::OttoSerialCommand()
 {
-	
+	//usingOttoSoftwareSerial = 1;
+	//SoftSerial = &SoftSer;
 	strncpy(delim," ",MAXDELIMETER);  // strtok_r needs a null-terminated string
 	term='\r';   // return character, default terminator for commands
 	numCommand=0;    // Number of callback handlers installed
@@ -56,12 +58,17 @@ void OttoSerialCommand::readSerial()
 {
 	bool onlyOneCommand = true;
 	// If we're using the Hardware port, check it.   Otherwise check the user-created OttoSoftwareSerial Port
+	//while ( ((Serial.available() > 0)&&(onlyOneCommand==true)) || ((SoftSerial->available() > 0)&&(onlyOneCommand==true)) )	
 	while ((Serial.available() > 0)&&(onlyOneCommand==true))
 	{
 		int i; 
-		boolean matched; 
+		boolean matched;
 		
-			inChar=Serial.read();   // Read single available character, there may be more waiting
+		//if(Serial.available() > 0) {
+		inChar=Serial.read();   // Read single available character, there may be more waiting
+                //} else {
+		    //inChar=SoftSerial->read();   // Read single available character, there may be more waiting
+                //}
 		
 		if (inChar==term) {     // Check for the terminator (default '\r') meaning end of command
 

@@ -28,25 +28,12 @@ FOOT_R D5==> -----   ------  <== FOOT_L -> D4
 */
 
 Otto Otto;  //my name is Otto! Hello World!
-//---------------------------------------------------------
-/*
-#define HIP_L   2        // connect Servo Hip left to D2
-#define FOOT_L  4        // Connect Servo Foot Left to D4
-#define HIP_R   3        // Connect Servo Hip right to D3
-#define FOOT_R  5        // COnnect Servo Foot Right to D5
-*/
-
-
-
-//---------------------------------------------------------
-
-
+//OttoSerialCommand SCmd(*Otto.SerialSoft); //The SerialCommand object
 
 ///////////////////////////////////////////////////////////////////
 //-- Global Variables -------------------------------------------//
 ///////////////////////////////////////////////////////////////////
-const char programID[]="Otto_mBlock";
-//const char programID[]="Zowi_Otto"; //Each program will have a ID
+const char programID[]="OttoIFL_mBlock";
 
 const char name_fac='$'; //Factory name
 const char name_fir='#'; 
@@ -70,10 +57,10 @@ bool obstacleDetected = false;
 void setup(){
 
   //Serial communication initialization USB cable (115200)
-  //BT.begin(9600);  
+  //Otto.SerialSoft->begin(115200);  
   Serial.begin(115200);
   
-  Otto.init(HIP_L, HIP_R, FOOT_L, FOOT_R, false, PIN_NoiseSensor, PIN_Buzzer,PIN_Trigger, PIN_Echo);  
+  Otto.init(LEG_L, LEG_R, FOOT_L, FOOT_R, false, PIN_Noise, PIN_Buzzer,PIN_Trigger, PIN_Echo);  
   // [No calibrate home position] [ SRF04 Echo to D9, Trigger to D10 ] [ Buzzer to D11(High level active)]
 
 
@@ -113,7 +100,8 @@ void setup(){
   //Checking battery
   LowBatteryAlarm();
   Otto.sing(S_happy);
-  delay(200);
+  Otto.putMouth(happyOpen);
+  delay(200);  
  // Animation Uuuuuh - A little moment of initial surprise
 
 }
@@ -123,8 +111,8 @@ void setup(){
 ///////////////////////////////////////////////////////////////////
 void loop() {
 
+  //if ( (Serial.available() > 0) || (Otto.SerialSoft->available() > 0) ) {
   if (Serial.available() > 0) {
-
     SCmd.readSerial();
   
     //If Otto is moving yet

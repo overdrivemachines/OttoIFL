@@ -11,16 +11,12 @@
 #include "Oscillator.h"
 #include "US.h"
 
-void Otto::init(int LL = LEG_L, int LR = LEG_R, 
-  int FL = FOOT_L, int FR = FOOT_R,
-  bool load_calibration = true,
-  int NoiseSensor=PIN_NoiseSensor, int Buzzer=PIN_Buzzer, 
-  int USTrigger=PIN_Trigger, int USEcho=PIN_Echo, 
-  int AL = ARM_L, int AR = ARM_R)
+void Otto::init(int LL, int LR, int FL, int FR, bool load_calibration, int NoiseSensor, 
+                int Buzzer, int USTrigger, int USEcho, int AL, int AR) //FIXME: Add SoftwareSerial, RGB LED, Light sensors
 {
-  servo_pins[0] = LL;
-  servo_pins[1] = LR;
-  servo_pins[2] = FL;
+  servo_pins[0] = LL; 
+  servo_pins[1] = LR; // FIXME: setup defines for servos (#define SERVO_LL 0) 
+  servo_pins[2] = FL; // and replace where ever numbers are used ...
   servo_pins[3] = FR;
   servo_pins[4] = AL;
   servo_pins[5] = AR;
@@ -41,7 +37,7 @@ void Otto::init(int LL = LEG_L, int LR = LEG_R,
     }
   }
 
-  for (int i = 0; i < SERVO_COUNT; i++) 
+  for (int i = 0; i < SERVO_COUNT; i++) // set everything to 90 (home)
     servo_position[i] = 90;
 
   //US sensor init with the pins:
@@ -54,11 +50,16 @@ void Otto::init(int LL = LEG_L, int LR = LEG_R,
   pinMode(Buzzer,OUTPUT);
   pinMode(NoiseSensor,INPUT);
   
-  //ledmatrix.init();
-  //ledmatrix.setIntensity(1);
-  //TODO: check if successful
-  ledmatrix.begin(0x70); // pass in the address
-
+  ledmatrix.begin(); 
+  ledmatrix.setRotated (false);                  // set to rotate the output 90 degrees
+  ledmatrix.setFlipRows (true);                 // set to flip the order of the rows, top<>bottom
+  ledmatrix.setFlipCols (true);                 // set to flip the order of the columns, left<>right
+  ledmatrix.setRowOffset (7);                   // adjust between 0-7 to change the starting row
+  ledmatrix.setIntensity(0, MATRIX_BRIGHTNESS); // between 0-15
+  ledmatrix.shutdown(0, false);                 // need to start it up i.e. false = start up
+  ledmatrix.clearDisplay(0);
+  ledmatrix.refresh(0);
+  //SoftwareSerial SerialSoft(PIN_SSRx, PIN_SSTx);
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -71,10 +72,6 @@ void Otto::attachServos()
   {
     servo[i].attach(servo_pins[i]);
   }
-  // servo[0].attach(servo_pins[0]);
-  // servo[1].attach(servo_pins[1]);
-  // servo[2].attach(servo_pins[2]);
-  // servo[3].attach(servo_pins[3]);
 }
 
 void Otto::detachServos(){
@@ -643,18 +640,18 @@ void Otto::putMouth(unsigned long int mouth, bool predefined){
 }
 
 void Otto::writeFull(unsigned long value) {
-  ledmatrix.clear(); // clear display?
+  ledmatrix.clearDisplay(0); // clear display?
   for (int r=0; r<5;r++) { // 0 - 4 (5)
     for (int c=0; c<6; c++) { // 0 - 5 (6)
-      ledmatrix.drawPixel(6-c,7-r,(1L & (value >> r*6+c)));
+      ledmatrix.setLed(0, 7-r, 6-c, (1L & (value >> r*6+c)));
     }
   }
-  ledmatrix.writeDisplay();  // write the changes we just made to the displa
+  ledmatrix.refresh(0);  // write the changes we just made to the displa
 }
 
 void Otto::clearMouth() {
-  // ledmatrix.clearMatrix();
-  ledmatrix.clear();
+  ledmatrix.clearDisplay(0);
+  ledmatrix.refresh(0);  // write the changes we just made to the displa
 }
 
 ///////////////////////////////////////////////////////////////////
