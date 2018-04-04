@@ -10,6 +10,9 @@
 
 //-- Otto Library
 #include "OttoIFL.h"
+#include "OttoSerialCommand.h"
+
+OttoSerialCommand SCmd; //The SerialCommand object
 
 //---------------------------------------------------------
 //-- First step: Make sure the pins for servos are in the right position
@@ -25,7 +28,7 @@ FOOT_R D5==> -----   ------  <== FOOT_L -> D4
 */
 
 Otto Otto;  //my name is Otto! Hello World!
-OttoSerialCommand SCmd(*Otto.SerialSoft); //The SerialCommand object
+//OttoSerialCommand SCmd(*Otto.SerialSoft); //The SerialCommand object
 
 ///////////////////////////////////////////////////////////////////
 //-- Global Variables -------------------------------------------//
@@ -54,7 +57,7 @@ bool obstacleDetected = false;
 void setup(){
 
   //Serial communication initialization USB cable (115200)
-  Otto.SerialSoft->begin(115200);  
+  //Otto.SerialSoft->begin(115200);  
   Serial.begin(115200);
   
   Otto.init(LEG_L, LEG_R, FOOT_L, FOOT_R, false, PIN_Noise, PIN_Buzzer,PIN_Trigger, PIN_Echo);  
@@ -97,7 +100,8 @@ void setup(){
   //Checking battery
   LowBatteryAlarm();
   Otto.sing(S_happy);
-  delay(200);
+  Otto.putMouth(happyOpen);
+  delay(200);  
  // Animation Uuuuuh - A little moment of initial surprise
 
 }
@@ -107,8 +111,8 @@ void setup(){
 ///////////////////////////////////////////////////////////////////
 void loop() {
 
-  if ( (Serial.available() > 0) || (Otto.SerialSoft->available() > 0) ) {
-
+  //if ( (Serial.available() > 0) || (Otto.SerialSoft->available() > 0) ) {
+  if (Serial.available() > 0) {
     SCmd.readSerial();
   
     //If Otto is moving yet
