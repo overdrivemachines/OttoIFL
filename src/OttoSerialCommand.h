@@ -16,7 +16,7 @@
 #endif
 
 #include <string.h>
-#include <SoftwareSerial.h>  
+//#include <SoftwareSerial.h>  
 
 #define SERIALCOMMANDBUFFER 35  //16 after changed by me
 #define MAXSERIALCOMMANDS	14
@@ -25,8 +25,8 @@
 class OttoSerialCommand
 {
 	public:
-		OttoSerialCommand(SoftwareSerial &SoftSer);      // Constructor
-
+		//OttoSerialCommand(SoftwareSerial &SoftSer);      // Constructor
+		OttoSerialCommand();      // Constructor
 		void clearBuffer();   // Sets the command buffer to all '\0' (nulls)
 		char *next();         // returns pointer to next token found in command buffer (for getting arguments to commands)
 		void readSerial();    // Main entry point.  
@@ -48,8 +48,8 @@ class OttoSerialCommand
 		int numCommand;
 		OttoSerialCommandCallback CommandList[MAXSERIALCOMMANDS];   // Actual definition for command/handler array
 		void (*defaultHandler)();           // Pointer to the default handler function 
-		SoftwareSerial *SoftSerial;         // Pointer to a user-created SoftwareSerial object
-		int usingOttoSoftwareSerial;        // Used as boolean to see if we're using OttoSoftwareSerial object or not
+		//SoftwareSerial *SoftSerial;         // Pointer to a user-created SoftwareSerial object
+		//int usingOttoSoftwareSerial;        // Used as boolean to see if we're using OttoSoftwareSerial object or not
 
 };
 
