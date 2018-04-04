@@ -51,14 +51,15 @@ void Otto::init(int LL, int LR, int FL, int FR, bool load_calibration, int Noise
   pinMode(NoiseSensor,INPUT);
   
   ledmatrix.begin(); 
-  ledmatrix.setRotated (true);                  // set to rotate the output 90 degrees
+  ledmatrix.setRotated (false);                  // set to rotate the output 90 degrees
   ledmatrix.setFlipRows (true);                 // set to flip the order of the rows, top<>bottom
   ledmatrix.setFlipCols (true);                 // set to flip the order of the columns, left<>right
   ledmatrix.setRowOffset (7);                   // adjust between 0-7 to change the starting row
   ledmatrix.setIntensity(0, MATRIX_BRIGHTNESS); // between 0-15
   ledmatrix.shutdown(0, false);                 // need to start it up i.e. false = start up
-
-  SoftwareSerial SerialSoft(PIN_SSRx, PIN_SSTx);
+  ledmatrix.clearDisplay(0);
+  ledmatrix.refresh(0);
+  //SoftwareSerial SerialSoft(PIN_SSRx, PIN_SSTx);
 }
 
 ///////////////////////////////////////////////////////////////////
