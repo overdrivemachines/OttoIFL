@@ -147,7 +147,7 @@ class Otto
     void playGesture(int gesture);
 
     //-- SoftwareSerial
-    SoftwareSerial *SerialSoft;
+    //SoftwareSerial *SerialSoft;
 
   private:
     
