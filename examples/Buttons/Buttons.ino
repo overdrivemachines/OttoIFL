@@ -1,6 +1,6 @@
 #include <ADCTouch.h>
 
-int ref0, ref1;     //reference values to remove offset
+int ref0;     //reference values to remove offset
 
 void setup() 
 {
@@ -8,27 +8,28 @@ void setup()
 
     Serial.begin(9600);
 
-    ref0 = ADCTouch.read(A0, 500);    //create reference values to 
-    ref1 = ADCTouch.read(A1, 500);    //account for the capacitance of the pad
+    //create reference values to account for the capacitance of the pad
+    ref0 = ADCTouch.read(A2, 500);
+    Serial.print("Ref0 = ");
+    Serial.println(ref0);
 } 
 
 void loop() 
 {
-    int value0 = ADCTouch.read(A0);   //no second parameter
-    int value1 = ADCTouch.read(A1);   //   --> 100 samples
+    int value0 = ADCTouch.read(A2);   //no second parameter --> 100 samples
 
     value0 -= ref0;       //remove offset
-    value1 -= ref1;
 
-    Serial.print(value0 > 40);    //send (boolean) pressed or not pressed
-    Serial.print("\t");           //use if(value > threshold) to get the state of a button
-
-    Serial.print(value1 > 40);
-    Serial.print("\t\t");
+    Serial.print("Touched: ");
+    if (value0 > 40)
+        Serial.print("True ");
+    else
+        Serial.print("False ");
+        //send (boolean) pressed or not pressed
+           //use if(value > threshold) to get the state of a button
 
     Serial.print(value0);             //send actual reading
-    Serial.print("\t");
-	
-    Serial.println(value1);
-    delay(100);
+    Serial.print("\n");
+
+    delay(1000);
 }
