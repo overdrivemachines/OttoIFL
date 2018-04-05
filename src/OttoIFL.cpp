@@ -1294,6 +1294,14 @@ void Otto::playGesture(int gesture){
   }
 }    
 
+/**
+ * Checks if the ADCTouch sensor is being touched. If the value
+ * returned by the sensor is greater than 40 the sensor is being
+ * touched. The ADC touch reference must be subtracted to get
+ * accurate reading to account for the capacitance of the pad
+ * @return true - sensor is touched
+ *         false - sensor is not touched 
+ */
 bool Otto::isADCTouched()
 {
   return ((ADCTouch.read(PIN_ADCTouch) - ADCTouch_reference) > 40);
