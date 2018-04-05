@@ -60,6 +60,7 @@
 #include "Otto_sounds.h"
 #include "Otto_gestures.h"
 #include "OttoSerialCommand.h"
+#include <PololuLedStrip.h>
 
 /**
  *                   +-------+
@@ -135,6 +136,9 @@ class Otto
     void putMouth(unsigned long int mouth, bool predefined = true);
     void putAnimationMouth(unsigned long int anim, int index);
     void clearMouth();
+
+    //-- Nose  
+    void putNose(int red = 0, int green = 0, int blue = 0);
   
     //-- Sounds
     void _tone (float noteFrequency, long noteDuration, int silentDuration);
@@ -152,7 +156,10 @@ class Otto
   private:
     
     LedControlHT ledmatrix = LedControlHT(MATRIX_ADDR, 8, 1);
-    void writeFull(unsigned long value);
+    void writeMatrix(unsigned long value);
+
+    PololuLedStrip<PIN_RGBLED> rgbled;
+    rgb_color rgbled_colors;
 
     BatReader battery;
     Oscillator servo[SERVO_COUNT];
