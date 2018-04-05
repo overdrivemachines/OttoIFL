@@ -98,3 +98,4 @@ TODO: Install Adafruit_LED_Backpack, Adafruit-GFX-Library
 - https://github.com/OttoDIY/PLUS
 - https://github.com/stembotvn/OttoDIY_mBlock_Extension
 - https://github.com/OttoDIY/OttoDIY_mBlock_Extension
+- https://github.com/martin2250/ADCTouch
