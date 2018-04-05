@@ -69,7 +69,8 @@ void setup(){
 
   //Setup callbacks for SerialCommand commands 
   SCmd.addCommand("S", receiveStop);      //  sendAck & sendFinalAck
-  SCmd.addCommand("L", receiveLED);       //  sendAck & sendFinalAck
+  SCmd.addCommand("L", receiveMatrix);    //  sendAck & sendFinalAck
+  SCmd.addCommand("O", receiveRGBLED);    //  sendAck & sendFinalAck
   SCmd.addCommand("T", recieveBuzzer);    //  sendAck & sendFinalAck
   SCmd.addCommand("M", receiveMovement);  //  sendAck & sendFinalAck
   SCmd.addCommand("H", receiveGesture);   //  sendAck & sendFinalAck
@@ -149,8 +150,8 @@ void receiveStop(){
 }
 
 
-//-- Function to receive LED commands
-void receiveLED(){  
+//-- Function to receive LED Matrix commands
+void receiveMatrix(){  
 
     //sendAck & stop if necessary
     sendAck();
@@ -161,6 +162,42 @@ void receiveLED(){
 
 }
 
+//-- Function to receive RGB LED commands
+void receiveRGBLED(){  // "O 0 255 0" will set the led to green (RGB)
+    char *arg; 
+    int red = 0;
+    int green = 0;
+    int blue = 0;
+    sendAck(); //sendAck & stop if necessary
+    Otto.home();
+
+    arg = SCmd.next(); 
+    if (arg != NULL) {
+      red=atoi(arg);
+    } else {
+      sendFinalAck();
+      return;
+    }
+
+    arg = SCmd.next(); 
+    if (arg != NULL) {
+      green=atoi(arg);
+    } else {
+      sendFinalAck();
+      return;
+    }  
+    
+    arg = SCmd.next(); 
+    if (arg != NULL) {
+      blue=atoi(arg);
+    } else {
+      sendFinalAck();
+      return;
+    }
+    
+    Otto.putNose(red, green, blue); 
+    sendFinalAck();
+}
 
 //-- Function to receive buzzer commands
 void recieveBuzzer(){
