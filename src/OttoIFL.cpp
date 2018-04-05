@@ -15,8 +15,8 @@ void Otto::init(int LL, int LR, int FL, int FR, bool load_calibration, int Noise
                 int Buzzer, int USTrigger, int USEcho, int AL, int AR) //FIXME: Add SoftwareSerial, RGB LED, Light sensors
 {
   servo_pins[0] = LL; 
-  servo_pins[1] = LR; // FIXME: setup defines for servos (#define SERVO_LL 0) 
-  servo_pins[2] = FL; // and replace where ever numbers are used ...
+  servo_pins[1] = LR;  
+  servo_pins[2] = FL; 
   servo_pins[3] = FR;
   servo_pins[4] = AL;
   servo_pins[5] = AR;
@@ -28,11 +28,9 @@ void Otto::init(int LL, int LR, int FL, int FR, bool load_calibration, int Noise
   {
     for (int i = 0; i < SERVO_COUNT; i++) 
     {
-      // TODO: change EEPROM to read from 0..6
       int servo_trim = EEPROM.read(i);
       if (servo_trim > 128) 
         servo_trim -= 256;
-      // TODO: change servo size
       servo[i].SetTrim(servo_trim);
     }
   }
@@ -49,6 +47,8 @@ void Otto::init(int LL, int LR, int FL, int FR, bool load_calibration, int Noise
 
   pinMode(Buzzer,OUTPUT);
   pinMode(NoiseSensor,INPUT);
+
+  //LED Matrix & RGB LED  
   
   ledmatrix.begin(); 
   ledmatrix.setRotated (false);                  // set to rotate the output 90 degrees
@@ -59,6 +59,11 @@ void Otto::init(int LL, int LR, int FL, int FR, bool load_calibration, int Noise
   ledmatrix.shutdown(0, false);                 // need to start it up i.e. false = start up
   ledmatrix.clearDisplay(0);
   ledmatrix.refresh(0);
+
+  rgb_color rgbled_colors;
+  putNose(0, 255, 0); // RGB start with red
+
+  //SoftwareSerial
   //SoftwareSerial SerialSoft(PIN_SSRx, PIN_SSTx);
 }
 
@@ -555,6 +560,7 @@ void Otto::flapping(float steps, int T, int h, int dir){
 ///////////////////////////////////////////////////////////////////
 
 unsigned long int Otto::getMouthShape(int number){
+//FIXME: move these to header?
   unsigned long int types []={zero_code,one_code,two_code,three_code,four_code,five_code,six_code,seven_code,eight_code,
   nine_code,smile_code,happyOpen_code,happyClosed_code,heart_code,bigSurprise_code,smallSurprise_code,tongueOut_code,
   vamp1_code,vamp2_code,lineMouth_code,confused_code,diagonal_code,sad_code,sadOpen_code,sadClosed_code,
@@ -565,7 +571,7 @@ unsigned long int Otto::getMouthShape(int number){
 
 
 unsigned long int Otto::getAnimShape(int anim, int index){
-
+//FIXME: move these to header?
   unsigned long int littleUuh_code[]={
      0b00000000000000001100001100000000,
      0b00000000000000000110000110000000,
@@ -626,20 +632,20 @@ unsigned long int Otto::getAnimShape(int anim, int index){
 
 void Otto::putAnimationMouth(unsigned long int aniMouth, int index){
 
-      writeFull(getAnimShape(aniMouth,index));
+      writeMatrix(getAnimShape(aniMouth,index));
 }
 
 void Otto::putMouth(unsigned long int mouth, bool predefined){
 
   if (predefined){
-    writeFull(getMouthShape(mouth));
+    writeMatrix(getMouthShape(mouth));
   }
   else{
-    writeFull(mouth);
+    writeMatrix(mouth);
   }
 }
 
-void Otto::writeFull(unsigned long value) {
+void Otto::writeMatrix(unsigned long value) {
   ledmatrix.clearDisplay(0); // clear display?
   for (int r=0; r<5;r++) { // 0 - 4 (5)
     for (int c=0; c<6; c++) { // 0 - 5 (6)
@@ -652,6 +658,16 @@ void Otto::writeFull(unsigned long value) {
 void Otto::clearMouth() {
   ledmatrix.clearDisplay(0);
   ledmatrix.refresh(0);  // write the changes we just made to the displa
+}
+
+///////////////////////////////////////////////////////////////////
+//-- Nose -------------------------------------------------------//
+///////////////////////////////////////////////////////////////////
+void Otto::putNose(int red, int green, int blue) {
+  rgbled_colors.red = green; // swap red & green
+  rgbled_colors.green = red;
+  rgbled_colors.blue = blue;
+  rgbled.write(&rgbled_colors, 1);
 }
 
 ///////////////////////////////////////////////////////////////////
