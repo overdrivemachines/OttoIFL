@@ -60,6 +60,10 @@ void Otto::init(int LL, int LR, int FL, int FR, bool load_calibration, int Noise
   ledmatrix.clearDisplay(0);
   ledmatrix.refresh(0);
   //SoftwareSerial SerialSoft(PIN_SSRx, PIN_SSTx);
+  
+  // ADCTouch Sensor
+  // reference value to account for the capacitance of the pad
+  ADCTouch_reference = ADCTouch.read(PIN_ADCTouch, 500);
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -114,15 +118,17 @@ void Otto::saveTrimsOnEEPROM()
 void Otto::_moveServos(int time, int  servo_target[]) {
 
   attachServos();
-  if(getRestState()==true){
-        setRestState(false);
-  }
+  if (getRestState())
+    setRestState(false);
 
-  if(time>10){
-    for (int i = 0; i < 4; i++) increment[i] = ((servo_target[i]) - servo_position[i]) / (time / 10.0);
+  if(time > 10)
+  {
+    for (int i = 0; i < 4; i++) 
+      increment[i] = ((servo_target[i]) - servo_position[i]) / (time / 10.0);
     final_time =  millis() + time;
 
-    for (int iteration = 1; millis() < final_time; iteration++) {
+    for (int iteration = 1; millis() < final_time; iteration++) 
+    {
       partial_time = millis() + 10;
       for (int i = 0; i < 4; i++) servo[i].SetPosition(servo_position[i] + (iteration * increment[i]));
       while (millis() < partial_time); //pause
@@ -176,15 +182,18 @@ void Otto::_execute(int A[4], int O[4], int T, double phase_diff[4], float steps
 ///////////////////////////////////////////////////////////////////
 //-- HOME = Otto at rest position -------------------------------//
 ///////////////////////////////////////////////////////////////////
-void Otto::home(){
+void Otto::home()
+{
 
-  if(isOttoResting==false){ //Go to rest position only if necessary
+  if (isOttoResting == false)
+  { //Go to rest position only if necessary
 
+    // TODO: 6 servos instead of 4
     int homes[4]={90, 90, 90, 90}; //All the servos at rest position
     _moveServos(500,homes);   //Move the servos in half a second
 
     detachServos();
-    isOttoResting=true;
+    isOttoResting = true;
   }
 }
 
@@ -1284,3 +1293,8 @@ void Otto::playGesture(int gesture){
 
   }
 }    
+
+bool Otto::isADCTouched()
+{
+  return ((ADCTouch.read(PIN_ADCTouch) - ADCTouch_reference) > 40);
+}
