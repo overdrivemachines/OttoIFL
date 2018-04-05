@@ -1292,7 +1292,19 @@ void Otto::playGesture(int gesture){
     break;
 
   }
-}    
+}
+
+// Light Sensors
+int Otto::getLightLValue()
+{
+  return (analogRead(PIN_LightL));
+}
+
+int Otto::getLightRValue()
+{
+  return (analogRead(PIN_LightR));
+}
+
 
 /**
  * Checks if the ADCTouch sensor is being touched. If the value

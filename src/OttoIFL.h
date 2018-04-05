@@ -149,6 +149,10 @@ class Otto
     //-- SoftwareSerial
     //SoftwareSerial *SerialSoft;
     
+    // Light Sensors
+    int getLightLValue();
+    int getLightRValue();
+
     // ADCTouch Sensor
     bool isADCTouched();
   private:
