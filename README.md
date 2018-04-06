@@ -20,8 +20,6 @@ http://ottodiy.com
 ## Installation
 coming soon ...
 
-TODO: Install Adafruit_LED_Backpack, Adafruit-GFX-Library
-
 ## Hardware
 <img src="https://github.com/sfranzyshen/OttoIFL/blob/master/extras/media/connection.png" width="500" align="center">
 
