@@ -1,10 +1,3 @@
-/******************************************************************************
-* Zowi Battery Reader Library
-* 
-* @version 20150824
-* @author Raul de Pablos Martin
-*
-******************************************************************************/
 #ifndef __BATREADER_H__
 #define __BATREADER_H__
 
@@ -15,9 +8,7 @@
   #include "pins_arduino.h"
 #endif
 
-////////////////////////////
-// Definitions            //
-////////////////////////////
+// Definitions
 #define BAT_PIN A7
 #define BAT_MAX	4.2
 #define BAT_MIN	3.25
@@ -27,45 +18,13 @@
 
 class BatReader
 {
-public:
-	////////////////////////////
-	// Enumerations           //
-	////////////////////////////
+  public:
+  
+    BatReader(); // BatReader -- BatReader class constructor
+    double readBatVoltage(void); // readBatPercent
+    double readBatPercent(void); // readBatPercent
 
-	////////////////////////////
-	// Variables              //
-	////////////////////////////
-
-	////////////////////////////
-	// Functions              //
-	////////////////////////////
-	// BatReader -- BatReader class constructor
-	BatReader();
-
-	// readBatPercent
-	double readBatVoltage(void);
-	
-	// readBatPercent
-	double readBatPercent(void);
-	
-	
-
-private:	
-	////////////////////////////
-	// Enumerations           //
-	////////////////////////////
-	
-	
-	////////////////////////////
-	// Variables              //
-	////////////////////////////
-	
-	
-	////////////////////////////
-	// Functions              //
-	////////////////////////////
-	
-	
+  private:	
 };
 
 #endif // BATREADER_H //

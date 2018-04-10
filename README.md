@@ -1,4 +1,4 @@
-# OttoIFL
+# OttoIFL v1.0.1
 Arduino library for controlling the OttoIFL RoBot ...
 
 Mix from OttoDIY opensource Project.  
@@ -19,8 +19,6 @@ http://ottodiy.com
 
 ## Installation
 coming soon ...
-
-TODO: Install Adafruit_LED_Backpack, Adafruit-GFX-Library
 
 ## Hardware
 <img src="https://github.com/sfranzyshen/OttoIFL/blob/master/extras/media/connection.png" width="500" align="center">
@@ -98,4 +96,3 @@ TODO: Install Adafruit_LED_Backpack, Adafruit-GFX-Library
 - https://github.com/OttoDIY/PLUS
 - https://github.com/stembotvn/OttoDIY_mBlock_Extension
 - https://github.com/OttoDIY/OttoDIY_mBlock_Extension
-- https://github.com/martin2250/ADCTouch
