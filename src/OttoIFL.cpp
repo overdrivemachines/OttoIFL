@@ -142,26 +142,49 @@ void Otto::_moveServos(int time, int  servo_target[])
   }
 }
 
-void Otto::oscillateServos(int A[4], int O[4], int T, double phase_diff[4], float cycle = 1)
+/**
+ * [Otto::oscillateServos description]
+ * @param A          (int []) Array containing Amplitude for each servo
+ * @param O          (int []) Array containing Offset for each servo 
+ * @param T          (int) Setting Period (Milliseconds)
+ * @param phase_diff (int []) Array contining Phase for each servo
+ * @param cycle      [description]
+ */
+void Otto::oscillateServos(int A[SERVO_COUNT], int O[SERVO_COUNT], int T, 
+  double phase_diff[SERVO_COUNT], float cycle = 1)
 {
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < SERVO_COUNT; i++)
   {
+    // servo is an array of Oscillator objects
+     
+    // Setting Offset (degrees)
     servo[i].SetO(O[i]);
+
+    // Setting Amplitude (degrees)
     servo[i].SetA(A[i]);
+
+    // Setting Period (miliseconds)
     servo[i].SetT(T);
+
+    // Setting Phase (radians)
     servo[i].SetPh(phase_diff[i]);
   }
-  double ref=millis();
+
+  // millis() Returns the number of milliseconds 
+  // since the Arduino board began running the current program
+  double ref = millis();
   for (double x = ref; x <= T * cycle + ref; x = millis())
   {
-     for (int i = 0; i < 4; i++)
+     for (int i = 0; i < SERVO_COUNT; i++)
      {
+      // maintain the oscillations ??
        servo[i].refresh();
      }
   }
 }
 
-void Otto::_execute(int A[4], int O[4], int T, double phase_diff[4], float steps = 1.0)
+void Otto::_execute(int A[SERVO_COUNT], int O[SERVO_COUNT], int T, 
+  double phase_diff[SERVO_COUNT], float steps = 1.0)
 {
   attachServos();
   if(getRestState() == true)
@@ -231,9 +254,9 @@ void Otto::walk(float steps, int T, int dir)
   // -90 : Walk forward
   // 90 : Walk backward
   // Feet servos also have the same offset (for tiptoe a little bit)
-  int A[4] = {30, 30, 20, 20};
-  int O[4] = {0, 0, 4, -4};
-  double phase_diff[4] = {0, 0, DEG2RAD(dir * -90), DEG2RAD(dir * -90)};
+  int A[SERVO_COUNT] = {30, 30, 20, 20, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, 4, -4, 0, 0};
+  double phase_diff[SERVO_COUNT] = {0, 0, DEG2RAD(dir * -90), DEG2RAD(dir * -90), 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos! 
 }
 
@@ -249,9 +272,9 @@ void Otto::turn(float steps, int T, int dir)
   // When the right leg servo amplitude is higher, the steps taken by
   // the right leg are bigger than the left. So, the robot describes an 
   // left arc
-  int A[4] = {30, 30, 20, 20};
-  int O[4] = {0, 0, 4, -4};
-  double phase_diff[4] = {0, 0, DEG2RAD(-90), DEG2RAD(-90)}; 
+  int A[SERVO_COUNT] = {30, 30, 20, 20, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, 4, -4, 0, 0};
+  double phase_diff[SERVO_COUNT] = {0, 0, DEG2RAD(-90), DEG2RAD(-90), 0, 0}; 
   if(dir == LEFT)
   {  
     A[0] = 30; // Left leg servo
@@ -344,9 +367,9 @@ void Otto::updown(float steps, int T, int h)
   // Feet amplitude and offset are the same
   // Initial phase for the right foot is -90, so that it starts
   // in one extreme position (not in the middle)
-  int A[4] = {0, 0, h, h};
-  int O[4] = {0, 0, h, -h};
-  double phase_diff[4] = {0, 0, DEG2RAD(-90), DEG2RAD(90)};
+  int A[SERVO_COUNT] = {0, 0, h, h, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, h, -h, 0, 0};
+  double phase_diff[SERVO_COUNT] = {0, 0, DEG2RAD(-90), DEG2RAD(90), 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
@@ -359,9 +382,9 @@ void Otto::swing(float steps, int T, int h)
 {
   // Both feets are in phase. The offset is half the amplitude
   // It causes the robot to swing from side to side
-  int A[4] = {0, 0, h, h};
-  int O[4] = {0, 0, h / 2, -h / 2};
-  double phase_diff[4] = {0, 0, DEG2RAD(0), DEG2RAD(0)};
+  int A[SERVO_COUNT] = {0, 0, h, h, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, h / 2, -h / 2, 0, 0};
+  double phase_diff[SERVO_COUNT] = {0, 0, DEG2RAD(0), DEG2RAD(0), 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
@@ -374,9 +397,9 @@ void Otto::tiptoeSwing(float steps, int T, int h)
 {
   // Both feets are in phase. The offset is not half the amplitude in order to tiptoe
   // It causes the robot to swing from side to side
-  int A[4] = {0, 0, h, h};
-  int O[4] = {0, 0, h, -h};
-  double phase_diff[4] = {0, 0, 0, 0};
+  int A[SERVO_COUNT] = {0, 0, h, h, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, h, -h, 0, 0};
+  double phase_diff[SERVO_COUNT] = {0, 0, 0, 0, 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
@@ -392,9 +415,9 @@ void Otto::jitter(float steps, int T, int h){
   // in one extreme position (not in the middle)
   // h is constrained to avoid hit the feets
   h = min(25, h);
-  int A[4] = {h, h, 0, 0};
-  int O[4] = {0, 0, 0, 0};
-  double phase_diff[4] = {DEG2RAD(-90), DEG2RAD(90), 0, 0};
+  int A[SERVO_COUNT] = {h, h, 0, 0, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, 0, 0, 0, 0};
+  double phase_diff[SERVO_COUNT] = {DEG2RAD(-90), DEG2RAD(90), 0, 0, 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
@@ -410,9 +433,9 @@ void Otto::ascendingTurn(float steps, int T, int h)
   // in one extreme position (not in the middle)
   // h is constrained to avoid hit the feets
   h = min(13, h);
-  int A[4] = {h, h, h, h};
-  int O[4] = {0, 0, h+4, -h+4};
-  double phase_diff[4] = {DEG2RAD(-90), DEG2RAD(90), DEG2RAD(-90), DEG2RAD(90)};
+  int A[SERVO_COUNT] = {h, h, h, h, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, h+4, -h+4, 0, 0};
+  double phase_diff[SERVO_COUNT] = {DEG2RAD(-90), DEG2RAD(90), DEG2RAD(-90), DEG2RAD(90), 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
@@ -433,10 +456,10 @@ void Otto::moonwalker(float steps, int T, int h, int dir)
   // is 60 degrees.
   // Both amplitudes are equal. The offset is half the amplitud plus a little bit of
   // offset so that the robot tiptoe lightly
-  int A[4] = {0, 0, h, h};
-  int O[4] = {0, 0, h / 2 + 2, -h / 2 - 2};
+  int A[SERVO_COUNT] = {0, 0, h, h, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, h / 2 + 2, -h / 2 - 2, 0, 0};
   int phi = -dir * 90;
-  double phase_diff[4] = {0, 0, DEG2RAD(phi), DEG2RAD(-60 * dir + phi)};
+  double phase_diff[SERVO_COUNT] = {0, 0, DEG2RAD(phi), DEG2RAD(-60 * dir + phi), 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
@@ -448,9 +471,9 @@ void Otto::moonwalker(float steps, int T, int h, int dir)
 //  * Dir:  Direction: LEFT / RIGHT
 void Otto::crusaito(float steps, int T, int h, int dir)
 {
-  int A[4] = {25, 25, h, h};
-  int O[4] = {0, 0, h / 2 + 4, -h / 2 - 4};
-  double phase_diff[4] = {90, 90, DEG2RAD(0), DEG2RAD(-60 * dir)};
+  int A[SERVO_COUNT] = {25, 25, h, h, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, h / 2 + 4, -h / 2 - 4, 0, 0};
+  double phase_diff[SERVO_COUNT] = {90, 90, DEG2RAD(0), DEG2RAD(-60 * dir), 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
