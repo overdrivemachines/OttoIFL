@@ -96,3 +96,4 @@ coming soon ...
 - https://github.com/OttoDIY/PLUS
 - https://github.com/stembotvn/OttoDIY_mBlock_Extension
 - https://github.com/OttoDIY/OttoDIY_mBlock_Extension
+- https://github.com/martin2250/ADCTouch

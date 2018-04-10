@@ -37,8 +37,7 @@
 #define PIN_LightR          A1
 
 // ADCTouch/Switch
-#define PIN_Button1         A2
-#define PIN_Button2         A3
+#define PIN_ADCTouch        A2
 
 // LED Matrix H16K33 / LedControlHK library
 #define PIN_SDA             A4
@@ -56,6 +55,7 @@
 #include <BatReader.h>
 #include <Wire.h>
 #include <LedControlHT.h>
+#include <ADCTouch.h>
 #include "Otto_mouths.h"
 #include "Otto_sounds.h"
 #include "Otto_gestures.h"
@@ -152,7 +152,13 @@ class Otto
 
     //-- SoftwareSerial
     //SoftwareSerial *SerialSoft;
+    
+    // Light Sensors
+    int getLightLValue();
+    int getLightRValue();
 
+    // ADCTouch Sensor
+    bool isADCTouched();
   private:
     
     LedControlHT ledmatrix = LedControlHT(MATRIX_ADDR, 8, 1);
@@ -177,6 +183,8 @@ class Otto
     float increment[4];
    
     bool isOttoResting;
+
+    int ADCTouch_reference; //reference values to remove offset
 
     unsigned long int getMouthShape(int number);
     unsigned long int getAnimShape(int anim, int index);

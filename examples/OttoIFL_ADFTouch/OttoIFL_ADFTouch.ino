@@ -15,8 +15,8 @@ void loop()
   // put your main code here, to run repeatedly:
   
   
-  Serial.print("Light Left: ");
-  Serial.println(otto.getLightLValue());
+  Serial.print("Touched: ");
+  Serial.println(otto.isADCTouched());
 
   delay(1000);
 }
