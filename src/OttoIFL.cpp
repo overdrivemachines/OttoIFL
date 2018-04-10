@@ -485,9 +485,9 @@ void Otto::crusaito(float steps, int T, int h, int dir)
 //  * dir: direction: FOREWARD, BACKWARD
 void Otto::flapping(float steps, int T, int h, int dir)
 {
-  int A[4] = {12, 12, h, h};
-  int O[4] = {0, 0, h - 10, -h + 10};
-  double phase_diff[4] = {DEG2RAD(0), DEG2RAD(180), DEG2RAD(-90 * dir), DEG2RAD(90 * dir)};
+  int A[SERVO_COUNT] = {12, 12, h, h, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, h - 10, -h + 10, 0, 0};
+  double phase_diff[SERVO_COUNT] = {DEG2RAD(0), DEG2RAD(180), DEG2RAD(-90 * dir), DEG2RAD(90 * dir), 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
