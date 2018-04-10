@@ -1,22 +1,18 @@
 #include <OttoIFL.h>
 
-Otto otto;
+Otto Otto;
 
 void setup() 
 {  
-  // put your setup code here, to run once:
-  otto.init();
-  Serial.begin(9600);
-
+  Otto.init();
+  Serial.begin(115200);
 }
 
 void loop() 
 {
-  // put your main code here, to run repeatedly:
-  
-  
   Serial.print("Light Left: ");
-  Serial.println(otto.getLightLValue());
-
+  Serial.println(Otto.getLight(LEFT));
+  Serial.print("Light Right: ");
+  Serial.println(Otto.getLight(RIGHT));
   delay(1000);
 }

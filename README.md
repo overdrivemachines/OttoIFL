@@ -46,7 +46,7 @@ coming soon ...
  |  LED Matrix (HT16K33)  sda    | A4          |
  |  LED Matrix (HT16K33)  scl    | A5          |
  |  Analog Sound Sensor (MEMS)   | A6          |
- |  Battery Sensor               | A7          |
+ |                               | A7          |
  
 ## OttoIFL 3D Models:
 - https://github.com/sfranzyshen/OttoIFL_3D
@@ -96,4 +96,3 @@ coming soon ...
 - https://github.com/OttoDIY/PLUS
 - https://github.com/stembotvn/OttoDIY_mBlock_Extension
 - https://github.com/OttoDIY/OttoDIY_mBlock_Extension
-- https://github.com/martin2250/ADCTouch
