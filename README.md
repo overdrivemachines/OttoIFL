@@ -1,5 +1,5 @@
 # OttoIFL v1.0.1
-Arduino library for controlling the OttoIFL RoBot ...
+Arduino library for controlling the OttoIFL Robot ...
 
 Mix from OttoDIY opensource Project.  
 http://ottodiy.com 
