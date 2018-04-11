@@ -112,14 +112,16 @@ void Otto::_moveServos(int time, int  servo_target[])
 
   if(time > 10)
   {
-    for (int i = 0; i < 4; i++) increment[i] = ((servo_target[i]) - servo_position[i]) / (time / 10.0);
+    for (int i = 0; i < SERVO_COUNT; i++)
     {
-      final_time =  millis() + time;
+      increment[i] = ((servo_target[i]) - servo_position[i]) / (time / 10.0);
     }
+    final_time =  millis() + time;
+
     for (int iteration = 1; millis() < final_time; iteration++) 
     {
       partial_time = millis() + 10;
-      for (int i = 0; i < 4; i++)
+      for (int i = 0; i < SERVO_COUNT; i++)
       {
         servo[i].SetPosition(servo_position[i] + (iteration * increment[i]));
       }
@@ -131,37 +133,37 @@ void Otto::_moveServos(int time, int  servo_target[])
   }
   else
   {
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < SERVO_COUNT; i++)
     {
       servo[i].SetPosition(servo_target[i]);
     }
   }
-  for (int i = 0; i < 4; i++) 
+  for (int i = 0; i < SERVO_COUNT; i++) 
   {
     servo_position[i] = servo_target[i];
   }
 }
 
-void Otto::oscillateServos(int A[4], int O[4], int T, double phase_diff[4], float cycle = 1)
+void Otto::oscillateServos(int A[SERVO_COUNT], int O[SERVO_COUNT], int T, double phase_diff[SERVO_COUNT], float cycle = 1)
 {
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < SERVO_COUNT; i++)
   {
     servo[i].SetO(O[i]);
     servo[i].SetA(A[i]);
     servo[i].SetT(T);
     servo[i].SetPh(phase_diff[i]);
   }
-  double ref=millis();
+  double ref = millis();
   for (double x = ref; x <= T * cycle + ref; x = millis())
   {
-     for (int i = 0; i < 4; i++)
+     for (int i = 0; i < SERVO_COUNT; i++)
      {
        servo[i].refresh();
      }
   }
 }
 
-void Otto::_execute(int A[4], int O[4], int T, double phase_diff[4], float steps = 1.0)
+void Otto::_execute(int A[SERVO_COUNT], int O[SERVO_COUNT], int T, double phase_diff[SERVO_COUNT], float steps = 1.0)
 {
   attachServos();
   if(getRestState() == true)
@@ -184,7 +186,7 @@ void Otto::home()
 {
   if(isOttoResting == false) // Go to rest position only if necessary
   {
-    int homes[4] = {90, 90, 90, 90}; // All the servos at rest position
+    int homes[SERVO_COUNT] = {90, 90, 90, 90, 90, 90}; // All the servos at rest position
     _moveServos(500, homes); // Move the servos in half a second
     detachServos();
     isOttoResting = true;
@@ -211,9 +213,9 @@ void Otto::setRestState(bool state)
 // * T: Period
 void Otto::jump(float steps, int T)
 {
-  int up[] = {90, 90, 150, 30};
+  int up[SERVO_COUNT] = {90, 90, 150, 30, 90, 90};
   _moveServos(T, up);
-  int down[] = {90, 90, 90, 90};
+  int down[SERVO_COUNT] = {90, 90, 90, 90, 90, 90};
   _moveServos(T, down);
 }
 
@@ -231,9 +233,9 @@ void Otto::walk(float steps, int T, int dir)
   // -90 : Walk forward
   // 90 : Walk backward
   // Feet servos also have the same offset (for tiptoe a little bit)
-  int A[4] = {30, 30, 20, 20};
-  int O[4] = {0, 0, 4, -4};
-  double phase_diff[4] = {0, 0, DEG2RAD(dir * -90), DEG2RAD(dir * -90)};
+  int A[SERVO_COUNT] = {30, 30, 20, 20, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, 4, -4, 0, 0};
+  double phase_diff[SERVO_COUNT] = {0, 0, DEG2RAD(dir * -90), DEG2RAD(dir * -90), 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos! 
 }
 
@@ -249,9 +251,9 @@ void Otto::turn(float steps, int T, int dir)
   // When the right leg servo amplitude is higher, the steps taken by
   // the right leg are bigger than the left. So, the robot describes an 
   // left arc
-  int A[4] = {30, 30, 20, 20};
-  int O[4] = {0, 0, 4, -4};
-  double phase_diff[4] = {0, 0, DEG2RAD(-90), DEG2RAD(-90)}; 
+  int A[SERVO_COUNT] = {30, 30, 20, 20, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, 4, -4, 0, 0};
+  double phase_diff[SERVO_COUNT] = {0, 0, DEG2RAD(-90), DEG2RAD(-90), 0, 0}; 
   if(dir == LEFT)
   {  
     A[0] = 30; // Left leg servo
@@ -271,9 +273,9 @@ void Otto::turn(float steps, int T, int dir)
 //  * Dir: RIGHT = Right bend LEFT = Left bend
 void Otto::bend (int steps, int T, int dir)
 {
-  int bend1[4] = {90, 90, 62, 35}; // Parameters of all the movements. Default: Left bend
-  int bend2[4] = {90, 90, 62, 105};
-  int homes[4] = {90, 90, 90, 90};
+  int bend1[SERVO_COUNT] = {90, 90, 62, 35, 90, 90}; // Parameters of all the movements. Default: Left bend
+  int bend2[SERVO_COUNT] = {90, 90, 62, 105, 90, 90};
+  int homes[SERVO_COUNT] = {90, 90, 90, 90, 90, 90};
   //T = max(T, 600); // Time of one bend, constrained in order to avoid movements too fast.
   if(dir == -1) // Changes in the parameters if right direction is chosen 
   {
@@ -301,10 +303,10 @@ void Otto::bend (int steps, int T, int dir)
 void Otto::shakeLeg(int steps, int T, int dir)
 {
   int numberLegMoves = 2; // This variable change the amount of shakes
-  int shake_leg1[4] = {90, 90, 58, 35}; // Parameters of all the movements. Default: Right leg
-  int shake_leg2[4] = {90, 90, 58, 120};
-  int shake_leg3[4] = {90, 90, 58, 60};
-  int homes[4] = {90, 90, 90, 90};
+  int shake_leg1[SERVO_COUNT] = {90, 90, 58, 35, 90, 90}; // Parameters of all the movements. Default: Right leg
+  int shake_leg2[SERVO_COUNT] = {90, 90, 58, 120, 90, 90};
+  int shake_leg3[SERVO_COUNT] = {90, 90, 58, 60, 90, 90};
+  int homes[SERVO_COUNT]      = {90, 90, 90, 90, 90, 90};
 
   if(dir == -1)  // Changes in the parameters if left leg is chosen
   {
@@ -344,9 +346,9 @@ void Otto::updown(float steps, int T, int h)
   // Feet amplitude and offset are the same
   // Initial phase for the right foot is -90, so that it starts
   // in one extreme position (not in the middle)
-  int A[4] = {0, 0, h, h};
-  int O[4] = {0, 0, h, -h};
-  double phase_diff[4] = {0, 0, DEG2RAD(-90), DEG2RAD(90)};
+  int A[SERVO_COUNT] = {0, 0, h, h, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, h, -h, 0, 0};
+  double phase_diff[SERVO_COUNT] = {0, 0, DEG2RAD(-90), DEG2RAD(90), 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
@@ -359,9 +361,9 @@ void Otto::swing(float steps, int T, int h)
 {
   // Both feets are in phase. The offset is half the amplitude
   // It causes the robot to swing from side to side
-  int A[4] = {0, 0, h, h};
-  int O[4] = {0, 0, h / 2, -h / 2};
-  double phase_diff[4] = {0, 0, DEG2RAD(0), DEG2RAD(0)};
+  int A[SERVO_COUNT] = {0, 0, h, h, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, h / 2, -h / 2, 0, 0};
+  double phase_diff[SERVO_COUNT] = {0, 0, DEG2RAD(0), DEG2RAD(0), 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
@@ -374,9 +376,9 @@ void Otto::tiptoeSwing(float steps, int T, int h)
 {
   // Both feets are in phase. The offset is not half the amplitude in order to tiptoe
   // It causes the robot to swing from side to side
-  int A[4] = {0, 0, h, h};
-  int O[4] = {0, 0, h, -h};
-  double phase_diff[4] = {0, 0, 0, 0};
+  int A[SERVO_COUNT] = {0, 0, h, h, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, h, -h, 0, 0};
+  double phase_diff[SERVO_COUNT] = {0, 0, 0, 0, 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
@@ -392,9 +394,9 @@ void Otto::jitter(float steps, int T, int h){
   // in one extreme position (not in the middle)
   // h is constrained to avoid hit the feets
   h = min(25, h);
-  int A[4] = {h, h, 0, 0};
-  int O[4] = {0, 0, 0, 0};
-  double phase_diff[4] = {DEG2RAD(-90), DEG2RAD(90), 0, 0};
+  int A[SERVO_COUNT] = {h, h, 0, 0, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, 0, 0, 0, 0};
+  double phase_diff[SERVO_COUNT] = {DEG2RAD(-90), DEG2RAD(90), 0, 0, 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
@@ -410,9 +412,9 @@ void Otto::ascendingTurn(float steps, int T, int h)
   // in one extreme position (not in the middle)
   // h is constrained to avoid hit the feets
   h = min(13, h);
-  int A[4] = {h, h, h, h};
-  int O[4] = {0, 0, h+4, -h+4};
-  double phase_diff[4] = {DEG2RAD(-90), DEG2RAD(90), DEG2RAD(-90), DEG2RAD(90)};
+  int A[SERVO_COUNT] = {h, h, h, h, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, h + 4, -h + 4, 0, 0};
+  double phase_diff[SERVO_COUNT] = {DEG2RAD(-90), DEG2RAD(90), DEG2RAD(-90), DEG2RAD(90), 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
@@ -433,10 +435,10 @@ void Otto::moonwalker(float steps, int T, int h, int dir)
   // is 60 degrees.
   // Both amplitudes are equal. The offset is half the amplitud plus a little bit of
   // offset so that the robot tiptoe lightly
-  int A[4] = {0, 0, h, h};
-  int O[4] = {0, 0, h / 2 + 2, -h / 2 - 2};
+  int A[SERVO_COUNT] = {0, 0, h, h, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, h / 2 + 2, -h / 2 - 2, 0, 0};
   int phi = -dir * 90;
-  double phase_diff[4] = {0, 0, DEG2RAD(phi), DEG2RAD(-60 * dir + phi)};
+  double phase_diff[SERVO_COUNT] = {0, 0, DEG2RAD(phi), DEG2RAD(-60 * dir + phi), 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
@@ -448,9 +450,9 @@ void Otto::moonwalker(float steps, int T, int h, int dir)
 //  * Dir:  Direction: LEFT / RIGHT
 void Otto::crusaito(float steps, int T, int h, int dir)
 {
-  int A[4] = {25, 25, h, h};
-  int O[4] = {0, 0, h / 2 + 4, -h / 2 - 4};
-  double phase_diff[4] = {90, 90, DEG2RAD(0), DEG2RAD(-60 * dir)};
+  int A[SERVO_COUNT] = {25, 25, h, h, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, h / 2 + 4, -h / 2 - 4, 0, 0};
+  double phase_diff[SERVO_COUNT] = {90, 90, DEG2RAD(0), DEG2RAD(-60 * dir), 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
@@ -462,9 +464,9 @@ void Otto::crusaito(float steps, int T, int h, int dir)
 //  * dir: direction: FOREWARD, BACKWARD
 void Otto::flapping(float steps, int T, int h, int dir)
 {
-  int A[4] = {12, 12, h, h};
-  int O[4] = {0, 0, h - 10, -h + 10};
-  double phase_diff[4] = {DEG2RAD(0), DEG2RAD(180), DEG2RAD(-90 * dir), DEG2RAD(90 * dir)};
+  int A[SERVO_COUNT] = {12, 12, h, h, 0, 0};
+  int O[SERVO_COUNT] = {0, 0, h - 10, -h + 10, 0, 0};
+  double phase_diff[SERVO_COUNT] = {DEG2RAD(0), DEG2RAD(180), DEG2RAD(-90 * dir), DEG2RAD(90 * dir), 0, 0};
   _execute(A, O, T, phase_diff, steps); // Let's oscillate the servos!
 }
 
@@ -833,7 +835,7 @@ void Otto::sing(int songName)
   }
 }
 
-void Otto::move(int moveID,int time, int _moveSize)
+void Otto::move(int moveID, int time, int _moveSize)
 {
   int T = time;
   int moveSize;
@@ -911,20 +913,21 @@ void Otto::move(int moveID,int time, int _moveSize)
 // GESTURES
 void Otto::playGesture(int gesture)
 {
-  int sadPos[4] =      {110, 70, 20, 160};
-  int bedPos[4] =      {100, 80, 60, 120};
-  int fartPos_1[4] =   {90, 90, 145, 122}; //rightBend
-  int fartPos_2[4] =   {90, 90, 80, 122};
-  int fartPos_3[4] =   {90, 90, 145, 80};
-  int confusedPos[4] = {110, 70, 90, 90};
-  int angryPos[4] =    {90, 90, 70, 110};
-  int headLeft[4] =    {110, 110, 90, 90};
-  int headRight[4] =   {70, 70, 90, 90};
-  int fretfulPos[4] =  {90, 90, 90, 110};
-  int bendPos_1[4] =   {90, 90, 70, 35};
-  int bendPos_2[4] =   {90, 90, 55, 35};
-  int bendPos_3[4] =   {90, 90, 42, 35};
-  int bendPos_4[4] =   {90, 90, 34, 35};
+  int sadPos[SERVO_COUNT]      PROGMEM =   {110, 70, 20, 160, 90, 90};
+  int bedPos[SERVO_COUNT]      PROGMEM =   {100, 80, 60, 120, 90, 90};
+  int fartPos_1[SERVO_COUNT]   PROGMEM =   {90, 90, 145, 122, 90, 90}; //rightBend
+  int fartPos_2[SERVO_COUNT]   PROGMEM =   {90, 90, 80, 122, 90, 90};
+  int fartPos_3[SERVO_COUNT]   PROGMEM =   {90, 90, 145, 80, 90, 90};
+  int confusedPos[SERVO_COUNT] PROGMEM =   {110, 70, 90, 90, 90, 90};
+  int angryPos[SERVO_COUNT]    PROGMEM =   {90, 90, 70, 110, 90, 90};
+  int headLeft[SERVO_COUNT]    PROGMEM =   {110, 110, 90, 90, 90, 90};
+  int headRight[SERVO_COUNT]   PROGMEM =   {70, 70, 90, 90, 90, 90};
+  int fretfulPos[SERVO_COUNT]  PROGMEM =   {90, 90, 90, 110, 90, 90};
+  int bendPos_1[4]   PROGMEM =   {90, 90, 70, 35};
+  int bendPos_2[4]   PROGMEM =   {90, 90, 55, 35};
+  int bendPos_3[4]   PROGMEM =   {90, 90, 42, 35};
+  int bendPos_4[4]   PROGMEM =   {90, 90, 34, 35};
+
   switch(gesture)
   {
     case OttoHappy: 
@@ -1022,7 +1025,7 @@ void Otto::playGesture(int gesture)
     case OttoLove:
       putMouth(heart);
       sing(S_cuddly);
-      crusaito(2,1500,15,1);
+      crusaito(2, 1500, 15, 1);
       home(); 
       sing(S_happy_short);  
       putMouth(happyOpen);
@@ -1073,7 +1076,7 @@ void Otto::playGesture(int gesture)
         {
           putAnimationMouth(adivinawi,index);
           bendTones(noteM, noteM + 100, 1.04, 10, 10); // 400 -> 1000 
-          noteM+=100;
+          noteM += 100;
         }
         clearMouth();
         bendTones(noteM - 100, noteM + 100, 1.04, 10, 10); // 900 -> 1100
@@ -1123,18 +1126,18 @@ void Otto::playGesture(int gesture)
     break;
     case OttoVictory:
       putMouth(smallSurprise);
-      // final pos = {90, 90, 150, 30}
+      // final pos = {90, 90, 150, 30, 90, 90}
       for (int i = 0; i < 60; ++i)
       {
-        int pos[]={90, 90, 90 + i,90 - i};  
+        int pos[SERVO_COUNT]={90, 90, 90 + i, 90 - i, 90, 90};  
         _moveServos(10, pos);
         _tone(1600 + i * 20, 15, 1);
       }
       putMouth(bigSurprise);
-      // final pos = {90, 90, 90, 90}
+      // final pos = {90, 90, 90, 90, 90, 90}
       for(int i = 0; i < 60; ++i)
       {
-        int pos[] = {90, 90, 150 - i, 30 + i};  
+        int pos[SERVO_COUNT] = {90, 90, 150 - i, 30 + i, 90, 90};  
         _moveServos(10, pos);
         _tone(2800 + i * 20, 15, 1);
       }

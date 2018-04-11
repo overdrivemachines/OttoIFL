@@ -273,7 +273,7 @@ class Otto
 
     // Oscillator Trims
     void setTrims(int LL = 0, int LR  = 0, int FL = 0, int FR = 0, int AL = 0, int AR = 0);
-    //int  getTrim(servo = 0);
+    //int  getTrim(int servo_target = 0);
     void saveTrimsOnEEPROM();
 
     // HOME = Otto at rest position
@@ -283,7 +283,7 @@ class Otto
     
     // Predetermined Motion Functions
     void _moveServos(int time, int servo_target[]);
-    void oscillateServos(int A[4], int O[4], int T, double phase_diff[4], float cycle);
+    void oscillateServos(int A[SERVO_COUNT], int O[SERVO_COUNT], int T, double phase_diff[SERVO_COUNT], float cycle);
     void jump(float steps = 1, int T = 2000);
     void walk(float steps = 4, int T = 1000, int dir = FORWARD);
     void turn(float steps = 4, int T = 2000, int dir = LEFT);
@@ -342,13 +342,13 @@ class Otto
     int pinNoiseSensor;
     unsigned long final_time;
     unsigned long partial_time;
-    float increment[4];
+    float increment[SERVO_COUNT];
     bool isOttoResting;
     int TouchL_reference;
     int TouchR_reference;
     unsigned long int getMouthShape(int number);
     unsigned long int getAnimShape(int anim, int index);
-    void _execute(int A[4], int O[4], int T, double phase_diff[4], float steps);
+    void _execute(int A[SERVO_COUNT], int O[SERVO_COUNT], int T, double phase_diff[SERVO_COUNT], float steps);
 };
 
 #endif
