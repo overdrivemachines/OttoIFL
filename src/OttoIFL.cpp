@@ -693,27 +693,26 @@ double Otto::getBatteryVoltage()
 }
 
 // Light Sensors
-int Otto::getLight(int dir) // Dir: Direction: LEFT = 1  RIGHT = -1
+int Otto::getLight(int direction)
 {
-  if(dir == 1)
-  {
+  if (direction == LEFT)
     return (analogRead(PIN_LightL));
-  }else
-  {
+  else if (direction == RIGHT)
     return (analogRead(PIN_LightR));
-  }
+  else
+    return 0;
 }
 
 // Touch Sensors
-bool Otto::getTouch(int dir) // Dir: Direction: LEFT = 1  RIGHT = -1
+bool Otto::getTouch(int direction)
 {
-  if(dir == 1)
-  {
+
+  if (direction == LEFT)
     return ((Touch.read(PIN_TouchL) - TouchL_reference) > 40);
-  }else
-  {
+  else if (direction == RIGHT)
     return ((Touch.read(PIN_TouchR) - TouchR_reference) > 40);
-  }
+  else
+    return 0;
 }
 
 // SOUNDS
