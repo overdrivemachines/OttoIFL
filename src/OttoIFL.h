@@ -302,8 +302,8 @@ class Otto
     // Sensors functions
     float getDistance();            // Ultrasonic Sensor
     int   getNoise();               // Noise Sensor
-    int   getLight(int dir = LEFT); // Light Sensors 
-    bool  getTouch(int dir = LEFT); // Capacitive Touch Sensor
+    int   getLight(int direction = LEFT); // Light Sensors 
+    bool  getTouch(int direction = LEFT); // Capacitive Touch Sensor
 
     // Battery
     double getBatteryLevel(); // Percent

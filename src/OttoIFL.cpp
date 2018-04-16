@@ -144,26 +144,50 @@ void Otto::_moveServos(int time, int  servo_target[])
   }
 }
 
-void Otto::oscillateServos(int A[SERVO_COUNT], int O[SERVO_COUNT], int T, double phase_diff[SERVO_COUNT], float cycle = 1)
+/**
+ * [Otto::oscillateServos description]
+ * @param A          (int []) Array containing Amplitude for each servo
+ * @param O          (int []) Array containing Offset for each servo 
+ * @param T          (int) Setting Period (Milliseconds)
+ * @param phase_diff (int []) Array contining Phase for each servo
+ * @param cycle      [description]
+ */
+void Otto::oscillateServos(int A[SERVO_COUNT], int O[SERVO_COUNT], int T, 
+  double phase_diff[SERVO_COUNT], float cycle = 1)
 {
   for (int i = 0; i < SERVO_COUNT; i++)
   {
+    // servo is an array of Oscillator objects
+     
+    // Setting Offset (degrees)
     servo[i].SetO(O[i]);
+
+    // Setting Amplitude (degrees)
     servo[i].SetA(A[i]);
+
+    // Setting Period (miliseconds)
     servo[i].SetT(T);
+
+    // Setting Phase (radians)
     servo[i].SetPh(phase_diff[i]);
   }
+
+  // millis() Returns the number of milliseconds 
+  // since the Arduino board began running the current program
   double ref = millis();
   for (double x = ref; x <= T * cycle + ref; x = millis())
   {
      for (int i = 0; i < SERVO_COUNT; i++)
      {
+      // maintain the oscillations ??
        servo[i].refresh();
      }
   }
 }
 
-void Otto::_execute(int A[SERVO_COUNT], int O[SERVO_COUNT], int T, double phase_diff[SERVO_COUNT], float steps = 1.0)
+
+void Otto::_execute(int A[SERVO_COUNT], int O[SERVO_COUNT], int T, 
+  double phase_diff[SERVO_COUNT], float steps = 1.0)
 {
   attachServos();
   if(getRestState() == true)
@@ -672,27 +696,26 @@ double Otto::getBatteryVoltage()
 }
 
 // Light Sensors
-int Otto::getLight(int dir) // Dir: Direction: LEFT = 1  RIGHT = -1
+int Otto::getLight(int direction)
 {
-  if(dir == 1)
-  {
+  if (direction == LEFT)
     return (analogRead(PIN_LightL));
-  }else
-  {
+  else if (direction == RIGHT)
     return (analogRead(PIN_LightR));
-  }
+  else
+    return 0;
 }
 
 // Touch Sensors
-bool Otto::getTouch(int dir) // Dir: Direction: LEFT = 1  RIGHT = -1
+bool Otto::getTouch(int direction)
 {
-  if(dir == 1)
-  {
+
+  if (direction == LEFT)
     return ((Touch.read(PIN_TouchL) - TouchL_reference) > 40);
-  }else
-  {
+  else if (direction == RIGHT)
     return ((Touch.read(PIN_TouchR) - TouchR_reference) > 40);
-  }
+  else
+    return 0;
 }
 
 // SOUNDS
