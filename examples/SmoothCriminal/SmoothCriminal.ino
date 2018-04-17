@@ -4,9 +4,6 @@
 //-- Originally made for Zowi project remake for Otto DIY
 //-- Authors:  Javier Isabel:  javier.isabel@bq.com
 //--           Juan Gonzalez (obijuan): juan.gonzalez@bq.com
-// Nicu FLORICA (niq_ro) add Ultrasonic Sensor (US) for activate dance
-// and deactivate servo in standby (ver1b)
-// http://www.arduinotehniq.com & nicu.florica@gmail.com
 //-----------------------------------------------------------------
 #include <Servo.h>
 #include <Oscillator.h>
@@ -20,6 +17,7 @@
         |---------------|
 YR 3==> |               | <== YL 2
          --------------- 
+            ||     ||
             ||     ||
 RR 5==>   -----   ------  <== RL 4
          |-----   ------|
@@ -41,13 +39,12 @@ RR 5==>   -----   ------  <== RL 4
 
 Oscillator servo[N_SERVOS];
 
-/*
 void goingUp(int tempo);
 void drunk (int tempo);
 void noGravity(int tempo);
 void kickLeft(int tempo);
 void kickRight(int tempo);
-void run1(int steps, int T=500);
+void run(int steps, int T=500);
 void walk(int steps, int T=1000);
 void backyard(int steps, int T=3000);
 void backyardSlow(int steps, int T=5000);
@@ -59,17 +56,10 @@ void crusaito(int steps, int T=1000);
 void swing(int steps, int T=1000);
 void upDown(int steps, int T=1000);
 void flapping(int steps, int T=1000);
-*/
-
-#define ECHOPIN 9        // Pin to receive echo pulse
-#define TRIGPIN 8        // Pin to send trigger pulse
-
-  int trimu;
-  int dansezpttine = 0;
 
 void setup()
 {
-//  Serial.begin(19200);
+  Serial.begin(19200);
   
   servo[0].attach(PIN_RR);
   servo[1].attach(PIN_RL);
@@ -81,16 +71,17 @@ void setup()
   //EEPROM.write(2,TRIM_YR);
   //EEPROM.write(3,TRIM_YL);
   
-
+  int trim;
+  
   if(EEPROM_TRIM){
     for(int x=0;x<4;x++){
-      trimu=EEPROM.read(x);
-      if(trimu>128)trimu=trimu-256;
+      trim=EEPROM.read(x);
+      if(trim>128)trim=trim-256;
       Serial.print("TRIM ");
       Serial.print(x);
       Serial.print(" en ");
-      Serial.println(trimu);
-      servo[x].SetTrim(trimu);
+      Serial.println(trim);
+      servo[x].SetTrim(trim);
     }
   }
   else{
@@ -101,11 +92,6 @@ void setup()
   }
   
   for(int i=0;i<4;i++) servo[i].SetPosition(90);
-  delay(500);
-  for(int i=0;i<4;i++) servo[i].detach();
-
-  pinMode(ECHOPIN, INPUT);
-  pinMode(TRIGPIN, OUTPUT);
 }
 
 // TEMPO: 121 BPM
@@ -118,62 +104,14 @@ void loop()
   //  char init = Serial.read();
    // if (init=='X'){
    //   delay(4000); //3000 - 4500
+   
+dance();
 
-// Start Ranging
-  digitalWrite(TRIGPIN, LOW);
-  delayMicroseconds(2);
-  digitalWrite(TRIGPIN, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(TRIGPIN, LOW);
-  // Compute distance
-  float distance = pulseIn(ECHOPIN, HIGH);
-  distance= distance/58;
-  Serial.print(distance);
-  Serial.println("cm");
- if ((distance >1) && (distance < 25))   
-  {
-  Serial.println ("Danceeeee !");
-  dansezpttine = 1;  
-  }
- 
- 
- if (dansezpttine == 1)
- {
-  servo[0].attach(PIN_RR);
-  servo[1].attach(PIN_RL);
-  servo[2].attach(PIN_YR);
-  servo[3].attach(PIN_YL);
-
-  if(EEPROM_TRIM){
-    for(int x=0;x<4;x++){
-      trimu=EEPROM.read(x);
-      if(trimu>128)trimu=trimu-256;
-      Serial.print("TRIM ");
-      Serial.print(x);
-      Serial.print(" en ");
-      Serial.println(trimu);
-      servo[x].SetTrim(trimu);
-    }
-  }
-  else{
-    servo[0].SetTrim(TRIM_RR);
-    servo[1].SetTrim(TRIM_RL);
-    servo[2].SetTrim(TRIM_YR);
-    servo[3].SetTrim(TRIM_YL);
-  }
-delay(100); 
- dance();
-delay(500); 
- for(int i=0;i<4;i++) servo[i].SetPosition(90);
-delay(500);
- for(int i=0;i<4;i++) servo[i].detach();
- dansezpttine = 0;
- }
-delay(200);
 
 //for(int i=0;i<4;i++) servo[i].SetPosition(90);
 
-     
+      
+          for(int i=0;i<4;i++) servo[i].SetPosition(90);
    // }
  // }
 }
@@ -193,7 +131,7 @@ void dance(){
     flapping(1,t/4);
     delay(3*t/4);
   }
-
+ 
   moonWalkRight(4,t*2);
   moonWalkLeft(4,t*2);
   moonWalkRight(4,t*2);
@@ -510,7 +448,7 @@ void walk(int steps, int T){
     for(int i=0;i<steps;i++)oscillate(A,O, T, phase_diff);
 }
 
-void run1(int steps, int T){
+void run(int steps, int T){
     int A[4]= {10, 10, 10, 10};
     int O[4] = {0, 0, 0, 0};
     double phase_diff[4] = {DEG2RAD(0), DEG2RAD(0), DEG2RAD(90), DEG2RAD(90)}; 
