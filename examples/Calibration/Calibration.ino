@@ -33,7 +33,7 @@ int pick_servo = 0;
 
 void setup() 
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   servo[0].attach(LEG_L);
   servo[1].attach(LEG_R);
   servo[2].attach(FOOT_L);
@@ -76,7 +76,7 @@ void loop()
       case '+':
       case '-':
         Serial.println(command);
-        Serial.println("---");
+        Serial.println("=======");
         calibration(command);
         break;
     }
@@ -129,12 +129,16 @@ void chooseServo()
         break;
     }
     Serial.println("selected");
+
+    Serial.println("+[value] or -[value]");
+    Serial.println("Eg: +5");
+    Serial.println("Eg: -8");
   }
 }
 
 void calibration(char command) 
 {
-  if (pick_servo >=0 && pick_servo <= 3) 
+  if (((pick_servo >= 2) && (pick_servo <= 5)) || (pick_servo == 10) || (pick_servo == 11)) 
   {
     int input = Serial.parseInt();
     int temp = servo[pick_servo].getTrim();
@@ -147,6 +151,8 @@ void calibration(char command)
           servo[pick_servo].SetTrim(temp-input);
           break;
       }
+
+
       servo[pick_servo].SetPosition(90);
     }
   }
@@ -198,13 +204,17 @@ void loadTrim() {
 }
 
 void printInfo() {
-  Serial.print("Otto_YL: ");
+  Serial.print("Otto LEG_L: ");
   Serial.println(servo[0].getTrim());
-  Serial.print("Otto_YR: ");
+  Serial.print("Otto LEG_R: ");
   Serial.println(servo[1].getTrim());
-  Serial.print("Otto_RL: ");
+  Serial.print("Otto FOOT_L: ");
   Serial.println(servo[2].getTrim());
-  Serial.print("Otto_RR: ");
+  Serial.print("Otto FOOT_R: ");
   Serial.println(servo[3].getTrim());
+  Serial.print("Otto ARM_L: ");
+  Serial.println(servo[4].getTrim());
+  Serial.print("Otto ARM_R: ");
+  Serial.println(servo[5].getTrim());
 }
 
