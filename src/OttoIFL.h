@@ -51,7 +51,7 @@
 #define PIN_Noise   A6 
 
 // Home Switch
-#define PIN_HomeSwitch A7
+#define PIN_HomeButton A7
 
 // Mouths sorted by numbers, and after, by happy to sad mouths
 #define zero           0
