@@ -718,6 +718,12 @@ bool Otto::getTouch(int direction)
     return 0;
 }
 
+// TODO: testing
+bool Otto::getHomeButton()
+{
+  return (Touch.read(PIN_HomeButton));
+}
+
 // SOUNDS
 void Otto::_tone(float noteFrequency, long noteDuration, int silentDuration)
 {

@@ -50,6 +50,9 @@
 // Analog Sound Sensor (MEMS)
 #define PIN_Noise   A6 
 
+// Home Switch
+#define PIN_HomeSwitch A7
+
 // Mouths sorted by numbers, and after, by happy to sad mouths
 #define zero           0
 #define one            1                
@@ -304,6 +307,7 @@ class Otto
     int   getNoise();               // Noise Sensor
     int   getLight(int direction = LEFT); // Light Sensors 
     bool  getTouch(int direction = LEFT); // Capacitive Touch Sensor
+    bool  getHomeButton();
 
     // Battery
     double getBatteryLevel(); // Percent
