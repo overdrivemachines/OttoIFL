@@ -24,14 +24,14 @@ void setup()
     // Serial.print(servo_trim);
     // Serial.print(" ");
   }
+
+  selectServo();
 }
 
 void loop() 
 {
 	if (Serial.available())
-		selectServo();
-  
-  	
+		selectServo();  	
 }
 
 void selectServo()
