@@ -5,9 +5,7 @@ Otto Otto;
 void setup() 
 {  
   Otto.init();
-  Serial.begin(115200);
-
-  
+  Serial.begin(115200);  
 }
 
 void loop() 
@@ -15,7 +13,8 @@ void loop()
 	if (Serial.available())
 	{
 		char command = Serial.read();
-		Serial.println("hello0");
+		Serial.print("hello ");
+		Serial.println(command);
 	}
 	  
 }
