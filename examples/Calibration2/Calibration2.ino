@@ -135,3 +135,10 @@ void printMenu()
 	Serial.println("Select a servo and set value. Eg 2 -27");
 	
 }
+
+// 2. Leg Left -20
+// 3. Leg Right -20
+// 4. Foot Left -27
+// 5. Foot Right -27
+// 10. Arm Left -10
+// 11. Arm Right -27
