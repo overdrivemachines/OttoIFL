@@ -4,14 +4,14 @@
 Otto otto;
 int servoTrims[SERVO_COUNT];
 
-void printServoTrimsFromEEPROM();
+void getAndPrintServoTrimsFromEEPROM();
 void printMenu();
 
 void setup() 
 {  
   otto.init();
   Serial.begin(115200);
-  printServoTrimsFromEEPROM();
+  getAndPrintServoTrimsFromEEPROM();
   printMenu();
 }
 
@@ -88,11 +88,12 @@ void loop()
 		otto.setTrims(servoTrims[0], servoTrims[1], servoTrims[2], servoTrims[3], servoTrims[4], servoTrims[5]);
 		otto.saveTrimsOnEEPROM();
 
+		getAndPrintServoTrimsFromEEPROM();
 		printMenu();			
 	}
 }
 
-void printServoTrimsFromEEPROM()
+void getAndPrintServoTrimsFromEEPROM()
 {
 	Serial.println("LL LR FL FR AL AR");
 	for (int i = 0; i < SERVO_COUNT; i++) 
