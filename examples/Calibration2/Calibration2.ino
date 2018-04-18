@@ -10,6 +10,7 @@ void printMenu();
 void setup() 
 {  
   otto.init();
+  otto.setAllServosTo90();
   Serial.begin(115200);
   getAndPrintServoTrimsFromEEPROM();
   printMenu();
@@ -85,8 +86,12 @@ void loop()
 			break;
 		}
 
+		// Set the trims for each servo
 		otto.setTrims(servoTrims[0], servoTrims[1], servoTrims[2], servoTrims[3], servoTrims[4], servoTrims[5]);
+		// Save trims on EEPROM
 		otto.saveTrimsOnEEPROM();
+
+		otto.setAllServosTo90();
 
 		getAndPrintServoTrimsFromEEPROM();
 		printMenu();			
