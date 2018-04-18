@@ -283,6 +283,7 @@ class Otto
     void home();
     bool getRestState();
     void setRestState(bool state);
+    void setAllServosTo90();
     
     // Predetermined Motion Functions
     void _moveServos(int time, int servo_target[]);

@@ -229,6 +229,14 @@ void Otto::setRestState(bool state)
   isOttoResting = state;
 }
 
+void Otto::setAllServosTo90()
+{
+  for (int i = 0; i < SERVO_COUNT; ++i)
+  {
+    servo[i].SetPosition(90);
+  }
+}
+
 // PREDETERMINED MOTION SEQUENCES
 
 // Otto movement: Jump
