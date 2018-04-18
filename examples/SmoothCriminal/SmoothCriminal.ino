@@ -22,22 +22,26 @@ YR 3==> |               | <== YL 2
 RR 5==>   -----   ------  <== RL 4
          |-----   ------|
 */
-#define EEPROM_TRIM false 
+#define EEPROM_TRIM true 
 // Activate to take callibration data from internal memory
-#define TRIM_RR 7
-#define TRIM_RL 4
-#define TRIM_YR  4
-#define TRIM_YL -7
+#define TRIM_FOOT_R -27
+#define TRIM_FOOT_L -27
+#define TRIM_LEG_R -27
+#define TRIM_LEG_L -10
+#define TRIM_ARM_L -10 
+#define TRIM_ARM_R -27
 //OTTO.setTrims(-7,-4,-4,7);
 
-#define PIN_RR 5
-#define PIN_RL 4
-#define PIN_YR 3
-#define PIN_YL 2
+#define PIN_LEG_L   2
+#define PIN_LEG_R   3
+#define PIN_FOOT_L  4
+#define PIN_FOOT_R  5
+#define PIN_ARM_L   10
+#define PIN_ARM_R   11
 
 #define INTERVALTIME 10.0 
 
-Oscillator servo[N_SERVOS];
+Oscillator servo[N_SERVOS + 2];
 
 void goingUp(int tempo);
 void drunk (int tempo);
@@ -59,39 +63,79 @@ void flapping(int steps, int T=1000);
 
 void setup()
 {
-  Serial.begin(19200);
   
-  servo[0].attach(PIN_RR);
-  servo[1].attach(PIN_RL);
-  servo[2].attach(PIN_YR);
-  servo[3].attach(PIN_YL);
+  Serial.begin(115200);
   
-  //EEPROM.write(0,TRIM_RR);
-  //EEPROM.write(1,TRIM_RL);
-  //EEPROM.write(2,TRIM_YR);
-  //EEPROM.write(3,TRIM_YL);
+  // Servo order is different than the order in OttoIFL
+  // servo[0] is PIN_FOOT_L in OttoIFL
   
-  int trim;
+  servo[0].attach(PIN_FOOT_R);
+  servo[1].attach(PIN_FOOT_L);
+  servo[2].attach(PIN_LEG_R);
+  servo[3].attach(PIN_LEG_L);
   
-  if(EEPROM_TRIM){
-    for(int x=0;x<4;x++){
-      trim=EEPROM.read(x);
-      if(trim>128)trim=trim-256;
-      Serial.print("TRIM ");
-      Serial.print(x);
-      Serial.print(" en ");
-      Serial.println(trim);
-      servo[x].SetTrim(trim);
+  servo[4].attach(PIN_ARM_R);
+  servo[5].attach(PIN_ARM_L);
+  
+  //EEPROM.write(0,TRIM_FOOT_R);
+  //EEPROM.write(1,TRIM_FOOT_L);
+  //EEPROM.write(2,TRIM_LEG_R);
+  //EEPROM.write(3,TRIM_LEG_L);  
+  
+  if(EEPROM_TRIM)
+  {
+    int servoTrims[N_SERVOS + 2];
+    Serial.println("LL LR FL FR AL AR");
+    // retrieve the trims
+    for (int i = 0; i < N_SERVOS + 2; i++) 
+    {
+      servoTrims[i] = EEPROM.read(i);
+      if (servoTrims[i] > 128)
+      {
+        servoTrims[i] -= 256;
+      }
+      Serial.print(servoTrims[i]);
+      Serial.print(" ");
+    }
+    Serial.println("");
+
+    // switch the trims because the servo order is different in OttoIFL
+    int temp = 0;
+    for (int i = 0; i < (N_SERVOS + 2); i+=2)
+    {
+      temp = servoTrims[i];
+      servoTrims[i] = servoTrims[i + 1];
+      servoTrims[i + 1] = temp;
+    }
+
+    // set the trims
+    for (int i = 0; i < (N_SERVOS + 2); ++i)
+    {
+      servo[i].SetTrim(servoTrims[i]);
     }
   }
-  else{
-    servo[0].SetTrim(TRIM_RR);
-    servo[1].SetTrim(TRIM_RL);
-    servo[2].SetTrim(TRIM_YR);
-    servo[3].SetTrim(TRIM_YL);
+  else
+  {
+    servo[0].SetTrim(TRIM_FOOT_R);
+    servo[1].SetTrim(TRIM_FOOT_L);
+    servo[2].SetTrim(TRIM_LEG_R);
+    servo[3].SetTrim(TRIM_LEG_L);
+    servo[4].SetTrim(TRIM_ARM_R);
+    servo[5].SetTrim(TRIM_ARM_L);
   }
   
-  for(int i=0;i<4;i++) servo[i].SetPosition(90);
+  for(int i = 0; i < N_SERVOS + 2; i++)
+    servo[i].SetPosition(90);
+
+  // verify trim values loaded
+  Serial.println("LL LR FL FR AL AR");
+  // retrieve the trims
+  for (int i = 0; i < N_SERVOS + 2; i++) 
+  {
+    Serial.print(servo[i].getTrim());
+    Serial.print(" ");
+  }
+  Serial.println("");
 }
 
 // TEMPO: 121 BPM
@@ -100,20 +144,21 @@ double pause=0;
 
 void loop()
 {
- // if(Serial.available()){
-  //  char init = Serial.read();
-   // if (init=='X'){
-   //   delay(4000); //3000 - 4500
-   
-dance();
+  dance();
+  for(int i = 0; i < 4; i++) 
+    servo[i].SetPosition(90);
 
-
-//for(int i=0;i<4;i++) servo[i].SetPosition(90);
-
-      
-          for(int i=0;i<4;i++) servo[i].SetPosition(90);
-   // }
- // }
+  // if(Serial.available())
+  // {
+  //   char init = Serial.read();
+  //   if (init=='X')
+  //   {
+  //     delay(4000); //3000 - 4500
+  //     dance();      
+  //     for(int i = 0; i < 4; i++) 
+  //       servo[i].SetPosition(90);
+  //   }
+  // }
 }
 
 void dance(){
