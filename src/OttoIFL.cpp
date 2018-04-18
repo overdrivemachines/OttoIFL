@@ -32,6 +32,7 @@ void Otto::init(int LL, int LR, int FL, int FR, bool load_calibration, int Noise
   {
     servo_position[i] = 90;
   }
+  setAllServosTo90();
 
   // US sensor
   us.init(USTrigger, USEcho);
