@@ -151,8 +151,6 @@ void calibration(char command)
           servo[pick_servo].SetTrim(temp-input);
           break;
       }
-
-
       servo[pick_servo].SetPosition(90);
     }
   }
