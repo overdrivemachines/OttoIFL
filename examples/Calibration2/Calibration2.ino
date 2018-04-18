@@ -41,22 +41,42 @@ void loop()
 			break;
 
 			case LEG_R:
+			Serial.print("Changing Leg Right from ");
+			Serial.print(servoTrims[1]);
+			Serial.print(" to ");
+			Serial.println(inputTrim);
 			servoTrims[1] = inputTrim;
 			break;
 
 			case FOOT_L:
+			Serial.print("Changing Foot Left from ");
+			Serial.print(servoTrims[2]);
+			Serial.print(" to ");
+			Serial.println(inputTrim);
 			servoTrims[2] = inputTrim;
 			break;
 
 			case FOOT_R:
+			Serial.print("Changing Foot Right from ");
+			Serial.print(servoTrims[3]);
+			Serial.print(" to ");
+			Serial.println(inputTrim);
 			servoTrims[3] = inputTrim;
 			break;
 
 			case ARM_L:
+			Serial.print("Changing Arm Left from ");
+			Serial.print(servoTrims[4]);
+			Serial.print(" to ");
+			Serial.println(inputTrim);
 			servoTrims[4] = inputTrim;
 			break;
 
 			case ARM_R:
+			Serial.print("Changing Arm Right from ");
+			Serial.print(servoTrims[5]);
+			Serial.print(" to ");
+			Serial.println(inputTrim);
 			servoTrims[5] = inputTrim;
 			break;
 
